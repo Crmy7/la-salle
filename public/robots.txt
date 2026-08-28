@@ -1,0 +1,4 @@
+# ⚠️ Site en préproduction : indexation bloquée.
+# À RETIRER À LA MISE EN LIGNE, avec la balise robots de nuxt.config.ts.
+User-agent: *
+Disallow: /

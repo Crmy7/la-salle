@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="400" fill="#600C1C"/>
+  <!-- Mur frontal -->
+  <g stroke="#F2EDE4" stroke-width="2.5" fill="none" opacity="0.55">
+    <rect x="74" y="52" width="252" height="236"/>
+    <line x1="74" y1="128" x2="326" y2="128"/>
+    <line x1="74" y1="214" x2="326" y2="214"/>
+  </g>
+  <!-- Tin -->
+  <rect x="75" y="262" width="250" height="25" fill="#DD0026" opacity="0.9"/>
+  <!-- Sol en perspective -->
+  <g stroke="#F2EDE4" stroke-width="1.8" fill="none" opacity="0.3">
+    <path d="M74 288 L26 392 M326 288 L374 392 M26 392 L374 392"/>
+    <path d="M200 288 L200 392"/>
+    <path d="M110 340 L290 340"/>
+  </g>
+</svg>

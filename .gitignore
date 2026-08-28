@@ -1,0 +1,58 @@
+# Dépendances
+node_modules
+.pnp
+.pnp.js
+
+# Build Nuxt
+.nuxt
+.output
+.data
+.nitro
+.cache
+dist
+
+# Variables d'environnement
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs
+
+# Tests et couverture
+coverage
+.nyc_output
+
+# Éditeurs
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Système
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Outils locaux
+.claude
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
+# Déploiement
+.vercel
+.netlify
