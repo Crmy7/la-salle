@@ -15,16 +15,6 @@
         </NuxtLink>
       </nav>
       <div class="menu__footer">
-        <div class="menu__col">
-          <p>480 avenue Jean Morin<br >Z.I des Dragiez<br >74800 La Roche-sur-Foron</p>
-        </div>
-        <div class="menu__col">
-          <p>
-            <a href="tel:+33450039663">04 50 03 96 63</a><br >
-            <a href="mailto:lasalle.laroche@yahoo.fr">lasalle.laroche@yahoo.fr</a><br >
-            <a href="https://www.instagram.com/lasalle.74" target="_blank" rel="noopener">@lasalle.74</a>
-          </p>
-        </div>
         <div class="menu__col menu__col--status">
           <p>{{ status }}</p>
         </div>

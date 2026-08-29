@@ -20,7 +20,10 @@
 
         <p class="cta__addr">
           {{ SALLE.adresse[0] }}<br >{{ SALLE.adresse[1] }}<br >{{ SALLE.adresse[2] }}
-          <span class="cta__access">{{ SALLE.accesLibre }}, 7j/7</span>
+          <span class="cta__access">
+            <em>Horaires d'accueil</em>
+            <span v-for="h in SALLE.accueil" :key="h">{{ h }}</span>
+          </span>
         </p>
       </div>
     </div>

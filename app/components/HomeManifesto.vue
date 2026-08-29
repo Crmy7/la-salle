@@ -2,9 +2,10 @@
   <section class="manifesto section--light">
     <div class="container">
       <p class="manifesto__text" data-words-scrub>
-        Une salle indépendante, pas une chaîne. Un plateau de musculation complet, une box de cross
-        training, plus de vingt cours collectifs par semaine et des éducateurs sportifs qui
-        connaissent votre prénom.
+        Une salle indépendante et complète, équipée d'un plateau de musculation et cardio, avec
+        plus de 40 heures de cours collectifs et 30 heures de cross training par semaine, une
+        salle de squash et une équipe d'éducateurs sportifs qualifiés pour vous accompagner au
+        quotidien.
       </p>
       <div class="manifesto__row">
         <figure class="manifesto__media" data-mask>

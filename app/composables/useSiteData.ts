@@ -62,57 +62,14 @@ export const PRESTATIONS: Prestation[] = [
     ],
   },
   {
-    slug: 'cross-training',
-    num: '02',
-    nom: 'Cross Training',
-    meta: 'Box dédiée, WOD encadrés · sur réservation',
-    img: '/assets/img/boxe-sombre.jpg',
-    imgBw: '/assets/img/bw/boxe-sombre.jpg',
-    intro:
-      "Une box dédiée, des séances à haute intensité encadrées par des éducateurs sportifs qualifiés. Les cours sont sur réservation, et la box reste en accès libre en dehors des créneaux encadrés.",
-    faits: [
-      { label: 'Réservation', valeur: 'Obligatoire pour les cours encadrés' },
-      { label: 'Accès libre', valeur: 'Box ouverte en dehors des cours' },
-      { label: 'Encadrement', valeur: 'Éducateurs sportifs qualifiés' },
-    ],
-    coursTitre: 'Les cours de Cross Training',
-    cours: [
-      {
-        nom: 'Cardio Training',
-        resa: true,
-        desc: "Activité physique qui permet une augmentation de la masse musculaire et permet de brûler les graisses tout en sollicitant le système cardio-vasculaire. La pratique vous aide à vous affiner en allant puiser directement dans vos cellules graisseuses.",
-      },
-      {
-        nom: 'Cross Training',
-        resa: true,
-        desc: "Discipline à haute intensité. Des mouvements d'haltérophilie, de gymnastique et d'athlétisme sont réalisés dans le cadre d'un entraînement dit fonctionnel.",
-      },
-      {
-        nom: 'Haltéro',
-        resa: true,
-        desc: "Sport de force consistant à soulever des poids grâce à la maîtrise d'une technique particulière combinant vitesse dans l'exécution, souplesse, coordination et équilibre.",
-      },
-      {
-        nom: 'Team WOD',
-        resa: true,
-        desc: "Séance de Cross Training par équipe de 2. La motivation et l'effort sont différents dans la mesure où vous ne faites plus les efforts pour vous uniquement, mais aussi pour vos coéquipiers.",
-      },
-      {
-        nom: 'TRX',
-        resa: true,
-        desc: "Méthode de renforcement musculaire général tirée de l'armée américaine. Les exercices se font à poids de corps et en suspension sur des sangles. Le TRX permet de développer la force, l'endurance, l'explosivité et l'équilibre.",
-      },
-    ],
-  },
-  {
     slug: 'cours-collectifs',
-    num: '03',
+    num: '02',
     nom: 'Cours collectifs',
     meta: 'Du pilates à la zumba, tous niveaux',
     img: '/assets/img/cross-training-site.jpg',
     imgBw: '/assets/img/bw/cross-training-site.jpg',
     intro:
-      "La Salle propose une variété de cours collectifs pour les membres qui cherchent des entraînements à plusieurs et à améliorer leur forme physique globale. Les cours incluent des options pour tous les niveaux et tous les intérêts, dirigés par des coachs professionnels expérimentés.",
+      "La Salle propose une variété de cours collectifs pour les adhérents qui cherchent des entraînements à plusieurs et à améliorer leur forme physique globale. Les cours incluent des options pour tous les niveaux et tous les intérêts, animés par des coachs professionnels expérimentés.",
     faits: [
       { label: 'Niveaux', valeur: 'Tous, du débutant au confirmé' },
       { label: 'Encadrement', valeur: 'Coachs professionnels expérimentés' },
@@ -176,6 +133,49 @@ export const PRESTATIONS: Prestation[] = [
     ],
   },
   {
+    slug: 'cross-training',
+    num: '03',
+    nom: 'Cross Training',
+    meta: 'Box dédiée, cours encadrés · sur réservation',
+    img: '/assets/img/boxe-sombre.jpg',
+    imgBw: '/assets/img/bw/boxe-sombre.jpg',
+    intro:
+      "Une box dédiée, des séances à haute intensité encadrées par des éducateurs sportifs qualifiés. Les cours sont sur réservation, et la box reste en accès libre en dehors des créneaux encadrés.",
+    faits: [
+      { label: 'Réservation', valeur: 'Obligatoire pour les cours encadrés' },
+      { label: 'Accès libre', valeur: 'Box ouverte en dehors des cours' },
+      { label: 'Encadrement', valeur: 'Éducateurs sportifs qualifiés' },
+    ],
+    coursTitre: 'Les cours de Cross Training',
+    cours: [
+      {
+        nom: 'Cardio Training',
+        resa: true,
+        desc: "Activité physique qui permet une augmentation de la masse musculaire et permet de brûler les graisses tout en sollicitant le système cardio-vasculaire. La pratique vous aide à vous affiner en allant puiser directement dans vos cellules graisseuses.",
+      },
+      {
+        nom: 'Cross Training',
+        resa: true,
+        desc: "Discipline à haute intensité. Des mouvements d'haltérophilie, de gymnastique et d'athlétisme sont réalisés dans le cadre d'un entraînement dit fonctionnel.",
+      },
+      {
+        nom: 'Haltéro',
+        resa: true,
+        desc: "Sport de force consistant à soulever des poids grâce à la maîtrise d'une technique particulière combinant vitesse dans l'exécution, souplesse, coordination et équilibre.",
+      },
+      {
+        nom: 'Team WOD',
+        resa: true,
+        desc: "Séance de Cross Training par équipe de 2. La motivation et l'effort sont différents dans la mesure où vous ne faites plus les efforts pour vous uniquement, mais aussi pour vos coéquipiers.",
+      },
+      {
+        nom: 'TRX',
+        resa: true,
+        desc: "Méthode de renforcement musculaire général tirée de l'armée américaine. Les exercices se font à poids de corps et en suspension sur des sangles. Le TRX permet de développer la force, l'endurance, l'explosivité et l'équilibre.",
+      },
+    ],
+  },
+  {
     slug: 'squash',
     num: '04',
     nom: 'Squash',
@@ -194,7 +194,7 @@ export const PRESTATIONS: Prestation[] = [
   {
     slug: 'kids',
     num: '05',
-    nom: 'Kids & Ados',
+    nom: 'Cours enfants / ados',
     meta: 'Baby gym, cross kids, cross teens · de la marche à 17 ans',
     img: '/assets/img/baby-gym.jpg',
     imgBw: '/assets/img/bw/baby-gym.jpg',
@@ -315,7 +315,7 @@ export const AUTRES_ABOS = [
     lignes: ['25 € / mois · 1 cours par semaine', '40 € / mois · 2 cours par semaine'],
   },
   {
-    titre: 'Zumba, Strong Nation',
+    titre: 'Zumba Strong',
     periode: 'Septembre à juillet',
     lignes: ['260 €'],
   },
@@ -543,7 +543,7 @@ export const DETAILS: Record<string, DetailPrestation> = {
       {
         titre: 'Des séances encadrées du début à la fin',
         texte:
-          "Chaque cours est mené par un éducateur sportif qualifié : échauffement, explication des mouvements, correction technique et adaptation des charges. Les cours se réservent depuis l'application de la salle.",
+          "Chaque cours est mené par un éducateur sportif qualifié : échauffement, explication des mouvements, correction technique et adaptation des charges. Les cours se réservent depuis l'application adhérent de La Salle.",
       },
     ],
     galerie: [
@@ -558,7 +558,7 @@ export const DETAILS: Record<string, DetailPrestation> = {
   'cours-collectifs': {
     sections: [
       {
-        titre: 'Treize disciplines au planning',
+        titre: 'De nombreuses disciplines au planning',
         texte:
           "Du cardio pur au travail de mobilité, en passant par le renforcement et la danse. Chaque cours a son intensité et son objectif propres : il y a de quoi construire une semaine complète sans jamais répéter la même séance.",
       },
@@ -590,7 +590,7 @@ export const DETAILS: Record<string, DetailPrestation> = {
       {
         titre: "Ce qu'il faut prévoir",
         texte:
-          "Les balles sont prêtées sur place et une raquette se loue 2 €. Les chaussures à semelles blanches sont obligatoires : les semelles noires marquent le revêtement du court.",
+          "Les balles sont prêtées sur place et une raquette se loue 2 €. Chaussures à semelles blanches obligatoires.",
       },
     ],
     galerie: [{ img: '/assets/img/squash-court.svg', alt: 'Schéma du court de squash' }],

@@ -4,6 +4,7 @@
     <HomeBand />
     <HomeManifesto />
     <HomeStats />
+    <HomeAcces />
     <HomePrestations />
     <HomeGallery />
     <HomePlanning />

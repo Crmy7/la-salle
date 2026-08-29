@@ -18,8 +18,7 @@
       </h1>
       <div class="hero__desc" data-hero-desc>
         <p>
-          Salle de sport indépendante à La&nbsp;Roche-sur-Foron. Musculation, cross&nbsp;training,
-          cours collectifs, squash et cours enfants, encadrés par des éducateurs diplômés.
+          Salle de sport indépendante à La&nbsp;Roche-sur-Foron.
         </p>
         <div class="hero__actions">
           <NuxtLink to="/contact" class="btn btn--primary" data-magnetic>

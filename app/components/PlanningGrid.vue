@@ -100,7 +100,7 @@ const LABELS: Record<Creneau['type'], string> = {
   cross: 'Cross Training',
   cardio: 'Cardio',
   renfo: 'Renforcement',
-  danse: 'Danse',
+  danse: 'Zumba',
   douceur: 'Gym douce',
   kids: 'Enfants & ados',
 }
