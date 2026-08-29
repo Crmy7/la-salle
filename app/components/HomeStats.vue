@@ -16,6 +16,6 @@ const stats = [
   { value: 5, suffix: 'h00', label: 'Première ouverture des portes, chaque matin' },
   { value: 23, suffix: 'h00', label: 'Dernières séries, chaque soir' },
   { value: 7, suffix: 'j/7', label: "Accès libre, toute l'année" },
-  { value: 20, suffix: '+', label: 'Cours collectifs et cross chaque semaine' },
+  { value: 40, suffix: '+', label: 'Cours collectifs et cross chaque semaine' },
 ]
 </script>

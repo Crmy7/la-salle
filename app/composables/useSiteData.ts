@@ -524,11 +524,11 @@ export const DETAILS: Record<string, DetailPrestation> = {
       { img: '/assets/img/halteres-rack.jpg', alt: 'Travail à la barre au rack' },
     ],
     acces: {
-      titre: 'Aucun créneau à réserver',
+      titre: 'Une offre accessible et adaptée à tous',
       lignes: [
-        'Le plateau est en accès libre de 5h00 à 23h00, tous les jours de la semaine.',
-        'Vous venez quand vous voulez, sans inscription préalable à un cours.',
-        'Accessible à partir de 17 ans révolus.',
+        "Un accès à nos différents espaces et activités selon la formule d'abonnement choisie.",
+        'Accessible dès 17 ans révolus pour le plateau de musculation et les cours collectifs.',
+        "Accès libre dès 18 ans, hors horaires d'accueil, sur réservation et dans la limite de 19 personnes simultanément.",
       ],
     },
     tarif: { grille: 'fitness-musculation' },

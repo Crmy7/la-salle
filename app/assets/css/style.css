@@ -1786,7 +1786,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* Accès sans créneau */
 .pacces { padding: clamp(70px, 9vw, 120px) 0; }
-.pacces .section-title { margin-bottom: clamp(36px, 4vw, 60px); }
+/* Même calibrage que sur l'accueil : le titre est long, à pleine échelle
+   il occuperait trois lignes et écraserait les trois points en dessous. */
+.pacces .section-title {
+  font-size: clamp(36px, 5.6vw, 84px);
+  margin-bottom: clamp(36px, 4.5vw, 70px);
+  max-width: 18ch;
+}
 .pacces__list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
