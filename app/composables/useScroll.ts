@@ -18,36 +18,6 @@ export function registerGsap() {
   registered = true
 }
 
-/** Verrouille la hauteur du hero sur mobile.
- *  Masquer la barre d'outils du navigateur agrandit la fenêtre : sans ce
- *  verrou, le hero et son image de fond changent de taille en plein défilement.
- *  On ne recalcule que si la largeur bouge, c'est-à-dire à la rotation. */
-export function lockViewportHeight() {
-  if (import.meta.server) return () => {}
-
-  /* Uniquement sur appareil tactile : sur ordinateur, redimensionner la
-     fenêtre en hauteur doit continuer à ajuster le hero normalement. */
-  if (!window.matchMedia('(pointer: coarse)').matches) return () => {}
-
-  const html = document.documentElement
-  const set = () => html.style.setProperty('--vh-lock', `${window.innerHeight}px`)
-  set()
-
-  let derniereLargeur = window.innerWidth
-  const onResize = () => {
-    if (window.innerWidth === derniereLargeur) return
-    derniereLargeur = window.innerWidth
-    set()
-  }
-  window.addEventListener('resize', onResize)
-  window.addEventListener('orientationchange', onResize)
-
-  return () => {
-    window.removeEventListener('resize', onResize)
-    window.removeEventListener('orientationchange', onResize)
-  }
-}
-
 export function initSmoothScroll(reduced: boolean) {
   if (import.meta.server || reduced) return null
 

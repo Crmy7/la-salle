@@ -79,11 +79,12 @@ s'alignent bord à bord. Ne pas réintroduire de `margin-top` décalés : ça tr
 la composition en îlots flottants séparés par du vide.
 
 ## Hauteur du hero sur mobile
-Masquer la barre du navigateur agrandit la fenêtre en plein défilement. Deux
-verrous : `lockViewportHeight()` pose `--vh-lock` une seule fois sur appareil
-tactile et ne la recalcule qu'à la rotation, et `ScrollTrigger.config({
-ignoreMobileResize: true })` empêche le recalcul des positions de parallaxe.
-Ne pas remplacer `var(--vh-lock, 100svh)` par `100vh` ou `100dvh`.
+Masquer la barre du navigateur agrandit la fenêtre en plein défilement, ce qui
+faisait changer le hero de taille. Sous 760px il a donc une **hauteur en pixels**
+(`min-height: 640px`), indépendante du viewport : ne pas la repasser en `vh`,
+`svh` ou `dvh`. Le contenu occupe 505px au plus serré, à 320px de large.
+`ScrollTrigger.config({ ignoreMobileResize: true })` complète le dispositif en
+empêchant le recalcul des positions de parallaxe au même moment.
 
 ## Navigation et défilement
 Lenis tient sa propre position de défilement : sans remise à zéro explicite, un

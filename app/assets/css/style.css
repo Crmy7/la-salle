@@ -322,12 +322,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    ============================================================ */
 .hero {
   position: relative;
-  /* Hauteur figée : --vh-lock est posée une fois au chargement et ne suit
-     pas la rétractation des barres du navigateur mobile. svh puis vh servent
-     de replis, dans cet ordre. */
   min-height: 100vh;
   min-height: 100svh;
-  min-height: var(--vh-lock, 100svh);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -1017,6 +1013,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 @media (max-width: 760px) {
+  /* Hauteur en pixels, indépendante du viewport : masquer la barre du
+     navigateur agrandit la fenêtre en plein défilement, et toute unité
+     relative ferait changer le hero de taille à ce moment-là.
+     Le contenu occupe 505px au plus serré (320px de large). */
+  .hero { min-height: 640px; }
+
   .section-title { font-size: clamp(36px, 11vw, 64px); }
   .hero__title-line--indent { margin-left: 0.12em; }
   .hero__bar { flex-wrap: wrap; row-gap: 12px; }
