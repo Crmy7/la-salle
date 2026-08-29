@@ -180,7 +180,8 @@ export const PRESTATIONS: Prestation[] = [
     num: '04',
     nom: 'Squash',
     meta: 'Sessions de 40 minutes · sur réservation',
-    img: '/assets/img/squash-court.svg',
+    img: '/assets/img/squash.jpg',
+    imgBw: '/assets/img/bw/squash.jpg',
     intro:
       "La Salle propose l'accès sur réservation à une salle de squash, pour des sessions de 40 minutes. Location de raquettes et prêt de balles sur place.",
     faits: [
