@@ -586,12 +586,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: color 0.35s ease;
 }
 .plist__name {
-  font-size: clamp(28px, 4.6vw, 76px);
+  font-size: clamp(24px, 3.5vw, 56px);
   font-weight: 800;
-  font-variation-settings: "wdth" 118;
+  font-variation-settings: "wdth" 116;
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  line-height: 1;
+  line-height: 1.05;
   transition: color 0.35s ease, transform 0.5s var(--ease-out);
 }
 .plist__meta {
