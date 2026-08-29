@@ -4,11 +4,13 @@ import {
   destroySmoothScroll,
   prefersReducedMotion,
   getLenis,
+  lockViewportHeight,
 } from '~/composables/useScroll'
 
 export default defineNuxtPlugin((nuxtApp) => {
   document.documentElement.classList.add('js')
   registerGsap()
+  lockViewportHeight()
   initSmoothScroll(prefersReducedMotion())
 
   /* Lenis tient sa propre position de défilement : sans remise à zéro

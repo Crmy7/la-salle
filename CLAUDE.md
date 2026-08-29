@@ -78,6 +78,13 @@ et tuiles sans `aspect-ratio` sur desktop, pour qu'elles remplissent leur cellul
 s'alignent bord à bord. Ne pas réintroduire de `margin-top` décalés : ça transforme
 la composition en îlots flottants séparés par du vide.
 
+## Hauteur du hero sur mobile
+Masquer la barre du navigateur agrandit la fenêtre en plein défilement. Deux
+verrous : `lockViewportHeight()` pose `--vh-lock` une seule fois sur appareil
+tactile et ne la recalcule qu'à la rotation, et `ScrollTrigger.config({
+ignoreMobileResize: true })` empêche le recalcul des positions de parallaxe.
+Ne pas remplacer `var(--vh-lock, 100svh)` par `100vh` ou `100dvh`.
+
 ## Navigation et défilement
 Lenis tient sa propre position de défilement : sans remise à zéro explicite, un
 changement de page laisse le visiteur au milieu du document. `plugins/scroll.client.ts`

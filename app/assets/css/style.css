@@ -322,7 +322,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    ============================================================ */
 .hero {
   position: relative;
+  /* Hauteur figée : --vh-lock est posée une fois au chargement et ne suit
+     pas la rétractation des barres du navigateur mobile. svh puis vh servent
+     de replis, dans cet ordre. */
+  min-height: 100vh;
   min-height: 100svh;
+  min-height: var(--vh-lock, 100svh);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
