@@ -6,7 +6,10 @@
     <HomeStats />
     <HomeAcces />
     <HomePrestations />
-    <HomeGallery />
+    <!-- Galerie masquée en attendant les photos définitives de la salle.
+         Le composant et son CSS restent en place : décommenter cette ligne
+         pour la réafficher, rien d'autre à faire. -->
+    <!-- <HomeGallery /> -->
     <HomePlanning />
     <div class="dark-run">
       <HomeQuote />
