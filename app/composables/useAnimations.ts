@@ -11,11 +11,21 @@ function onDispose(fn: () => void) {
 /* ============================================================
    PRELOADER
    ============================================================ */
-export function playPreloader(el: HTMLElement | null, reduced: boolean): Promise<void> {
-  if (!el) return Promise.resolve()
+/** `onFini` est appelé quand le rideau a totalement disparu. La promesse,
+ *  elle, se résout un peu avant : l'intro du hero doit recouvrir la sortie. */
+export function playPreloader(
+  el: HTMLElement | null,
+  reduced: boolean,
+  onFini?: () => void
+): Promise<void> {
+  if (!el) {
+    onFini?.()
+    return Promise.resolve()
+  }
 
   if (reduced) {
     el.style.display = 'none'
+    onFini?.()
     return Promise.resolve()
   }
 
@@ -45,6 +55,7 @@ export function playPreloader(el: HTMLElement | null, reduced: boolean): Promise
       .to(el, { clipPath: 'inset(0 0 100% 0)', duration: 0.9, ease: 'expo.inOut' }, out + 0.18)
       .call(resolve as () => void, [], out + 0.55)
       .set(el, { display: 'none' })
+      .call(() => onFini?.())
   })
 }
 

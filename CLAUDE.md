@@ -86,6 +86,16 @@ faisait changer le hero de taille. Sous 760px il a donc une **hauteur en pixels*
 `ScrollTrigger.config({ ignoreMobileResize: true })` complète le dispositif en
 empêchant le recalcul des positions de parallaxe au même moment.
 
+## Blocage du défilement au chargement
+Le rideau bloque le défilement. Le verrou est posé par un script en ligne dans
+`nuxt.config.ts` (`overflow: hidden` en style **en ligne** sur html et body) :
+une classe seule ne suffit pas, Vue peut l'écraser à l'hydratation, et tout ce
+qui n'est posé qu'au `onMounted` laisse passer les premières centaines de
+millisecondes. Un minuteur de 8 s relâche le verrou si l'application ne démarre
+pas. `playPreloader(el, reduced, onFini)` : `onFini` relâche le défilement quand
+le rideau a **totalement** disparu, alors que la promesse se résout un peu avant
+pour que l'intro du hero recouvre la sortie.
+
 ## Navigation et défilement
 Lenis tient sa propre position de défilement : sans remise à zéro explicite, un
 changement de page laisse le visiteur au milieu du document. `plugins/scroll.client.ts`

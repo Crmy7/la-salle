@@ -39,6 +39,14 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
 
+/* Défilement bloqué pendant le rideau d'ouverture */
+html.is-loading,
+html.is-loading body {
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
 body {
   font-family: var(--f-sans);
   font-size: 17px;

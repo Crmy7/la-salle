@@ -21,6 +21,24 @@ export default defineNuxtConfig({
         { name: 'robots', content: 'noindex, nofollow, noarchive, nosnippet' },
         { name: 'googlebot', content: 'noindex, nofollow' },
       ],
+      script: [
+        {
+          /* Posé avant le premier rendu : sans cela, le visiteur peut faire
+             défiler la page pendant les quelques centaines de millisecondes
+             qui précèdent l'hydratation, alors que le rideau est affiché.
+             Le minuteur est un filet : si l'application ne démarrait pas,
+             le défilement serait rendu malgré tout. */
+          innerHTML:
+            "var h=document.documentElement;" +
+            "h.classList.add('is-loading');h.style.overflow='hidden';" +
+            /* Selon le navigateur, l'élément qui défile est html ou body */
+            "var v=function(){if(document.body)document.body.style.overflow='hidden'};v();" +
+            "document.addEventListener('DOMContentLoaded',v);" +
+            "setTimeout(function(){h.classList.remove('is-loading');h.style.overflow='';" +
+            "if(document.body)document.body.style.overflow=''},8000);",
+          tagPosition: 'head',
+        },
+      ],
       link: [
         { rel: 'icon', type: 'image/png', href: '/favicon.png' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
