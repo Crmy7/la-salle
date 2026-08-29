@@ -14,7 +14,7 @@
       </li>
     </ul>
     <div class="plist__preview" data-plist-preview aria-hidden="true">
-      <img src="/assets/img/training-femme.jpg" alt="" data-plist-preview-img >
+      <img src="/assets/img/musculation.jpg" alt="" data-plist-preview-img >
     </div>
   </section>
 </template>

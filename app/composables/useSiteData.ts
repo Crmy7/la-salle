@@ -50,8 +50,8 @@ export const PRESTATIONS: Prestation[] = [
     num: '01',
     nom: 'Musculation',
     meta: 'Charges libres, cardio, machines guidées · dès 17 ans',
-    img: '/assets/img/training-femme.jpg',
-    imgBw: '/assets/img/bw/training-femme.jpg',
+    img: '/assets/img/musculation.jpg',
+    imgBw: '/assets/img/bw/musculation.jpg',
     intro:
       "La Salle est équipée d'un plateau de musculation comprenant un espace de charges libres, de cardio et d'abdos, et des machines guidées. Suivant le type d'abonnement choisi, des programmes personnalisés peuvent être réalisés avec nos éducateurs sportifs.",
     faits: [
@@ -196,8 +196,8 @@ export const PRESTATIONS: Prestation[] = [
     num: '05',
     nom: 'Cours enfants / ados',
     meta: 'Baby gym, cross kids, cross teens · de la marche à 17 ans',
-    img: '/assets/img/baby-gym.jpg',
-    imgBw: '/assets/img/bw/baby-gym.jpg',
+    img: '/assets/img/enfants.jpg',
+    imgBw: '/assets/img/bw/enfants.jpg',
     intro:
       "Nous accueillons vos enfants de la marche à 17 ans, de la gymnastique récréative au Cross Training adapté aux adolescents.",
     faits: [
