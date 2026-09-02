@@ -284,21 +284,25 @@ export const PRESTATIONS: Prestation[] = [
       },
       {
         nom: 'Cross Mini Kids',
+        resa: true,
         age: '4 à 6 ans',
         desc: 'Cours de Cross Training adapté aux plus jeunes.',
       },
       {
         nom: 'Cross Kids',
+        resa: true,
         age: '6 à 11 ans',
         desc: 'Cours de Cross Training adaptés aux enfants.',
       },
       {
         nom: 'Cross Mini Teens',
+        resa: true,
         age: '11 à 14 ans',
         desc: 'Cours de Cross Training adaptés aux préadolescents.',
       },
       {
         nom: 'Cross Teens',
+        resa: true,
         age: '14 à 17 ans',
         desc: 'Cours de Cross Training adaptés aux adolescents.',
       },
@@ -724,16 +728,8 @@ export function creneauxPrestation(cfg: DetailPrestation['planning']) {
   return out
 }
 
-/** Tout est sur réservation, sauf les cours de Cross Kids et Teens, qui se
- *  prennent à l'année. La Baby Gym, elle, se réserve : elle se déroule dans
- *  la salle des cours collectifs. */
-const SANS_RESERVATION = new Set([
-  'cross mini kids',
-  'cross kids',
-  'cross mini teens',
-  'cross teens',
-])
-
-export function surReservation(c: Creneau) {
-  return !SANS_RESERVATION.has(c.nom.toLowerCase())
+/** Tous les cours sont sur réservation, sans exception. */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function surReservation(_c: Creneau) {
+  return true
 }
