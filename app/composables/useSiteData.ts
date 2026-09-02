@@ -1,5 +1,5 @@
 /** Contenus réels de la salle, source unique pour toutes les pages.
- *  Tarifs et plannings relevés sur les documents officiels du site actuel :
+ *  Tarifs et plannings relevés sur la brochure officielle de septembre 2026 :
  *  aucun prix ni horaire n'est inventé ici. */
 
 export const SALLE = {
@@ -78,9 +78,14 @@ export const PRESTATIONS: Prestation[] = [
     coursTitre: 'Les cours collectifs',
     cours: [
       {
-        nom: 'Abdos Fessiers, Flash',
+        nom: 'Abdos Flash',
         resa: true,
-        desc: "Cours spécial de 20 minutes pour renforcer la ceinture abdominale et les fessiers sans impact, avec un travail cardio d'intensité modérée.",
+        desc: "Cours spécial renforcement de la ceinture abdominale, sans impact, avec un travail cardio d'intensité modérée. Ce cours vous aide en outre à conserver un bon maintien du dos et à éliminer les douleurs qui sont la cause des mauvaises postures.",
+      },
+      {
+        nom: 'Abdos Fessiers',
+        resa: true,
+        desc: 'Cours spécial permettant de renforcer les muscles de la ceinture abdominale et des fessiers.',
       },
       {
         nom: 'Animal Flow',
@@ -90,12 +95,12 @@ export const PRESTATIONS: Prestation[] = [
       {
         nom: 'Biking',
         resa: true,
-        desc: "Programme de cyclisme en salle, dans lequel vous roulez au rythme d'une musique entraînante. Améliore la capacité cardiovasculaire, brûle les graisses, sculpte les membres inférieurs, augmente la force des jambes et l'endurance musculaire.",
+        desc: "Programme de cyclisme en salle, dans lequel vous roulez au rythme d'une musique entraînante. Le biking améliore la capacité cardiovasculaire, brûle les graisses, sculpte les membres inférieurs, augmente la force des jambes et l'endurance musculaire.",
       },
       {
-        nom: 'Circuit Training',
+        nom: 'Cardio Training',
         resa: true,
-        desc: "Méthode d'entraînement qui consiste à effectuer plusieurs exercices les uns après les autres. Une fois le circuit terminé, l'enchaînement est repris depuis le début.",
+        desc: "Entraînement qui permet d'améliorer l'endurance de base, la fréquence cardiaque, brûler des calories et de rester en forme.",
       },
       {
         nom: 'Full Body',
@@ -103,14 +108,9 @@ export const PRESTATIONS: Prestation[] = [
         desc: "Travail de l'ensemble des muscles, des articulations et du système cardio-respiratoire.",
       },
       {
-        nom: 'Hiit',
-        resa: true,
-        desc: "Entraînement court et intense ponctué de phases de récupération réduites. Permet de tonifier la silhouette rapidement.",
-      },
-      {
         nom: 'Gym Ball',
         resa: true,
-        desc: "Technique de gym douce avec de gros ballons. Les mouvements sont inspirés du pilates, du yoga et du stretching. Le Gym Ball permet de renforcer les muscles profonds et stabilisateurs, mais aussi de développer la souplesse.",
+        desc: "Technique de gym douce avec des gros ballons. Les mouvements sont inspirés du pilates, du yoga et du stretching. Le gym ball permet de renforcer les muscles profonds et stabilisateurs, mais aussi de développer la souplesse.",
       },
       {
         nom: 'Gym Douce',
@@ -118,24 +118,49 @@ export const PRESTATIONS: Prestation[] = [
         desc: "Activité corporelle douce améliorant la circulation énergétique et offrant du bien-être autant dans son corps que dans son esprit.",
       },
       {
-        nom: 'Pilates, Yogalates',
+        nom: 'Hiit',
         resa: true,
-        desc: "Programme d'entraînement permettant de rééquilibrer les muscles du corps en se concentrant sur les principaux muscles qui interviennent dans l'équilibre du corps et le maintien de la colonne vertébrale. Renforcer et allonger les muscles, développer force et souplesse.",
+        desc: 'Entraînement court et intense ponctué de phases de récupération réduites, permet de tonifier la silhouette rapidement.',
+      },
+      {
+        nom: 'Pilates',
+        resa: true,
+        desc: "Technique de gym douce. Programme d'entraînement permettant de rééquilibrer les muscles du corps en se concentrant sur les principaux muscles qui interviennent dans l'équilibre du corps et le maintien de la colonne vertébrale. Renforcer et allonger les muscles.",
+      },
+      {
+        nom: 'Renfo Mobilité',
+        resa: true,
+        desc: 'Cours complet alliant renforcement global et mobilité pour réveiller le corps, améliorer souplesse et tonus.',
       },
       {
         nom: 'Step',
         resa: true,
-        desc: "Programme cardiovasculaire avec l'utilisation d'une plateforme. Permet d'augmenter l'endurance, la coordination, et de définir les membres inférieurs.",
+        desc: "Programme cardio-vasculaire avec l'utilisation d'une plateforme. Permet d'augmenter l'endurance, la coordination et permet de définir les membres inférieurs.",
       },
       {
-        nom: 'Stretching, Mobilité',
+        nom: 'Stretching / Mobilité',
         resa: true,
-        desc: "Technique de gym douce qui vise à étirer les muscles en douceur et améliorer la souplesse. Permet de renforcer la flexibilité et la stabilité en axant sur la mobilité corporelle.",
+        desc: 'Technique de gym douce qui vise à étirer les muscles en douceur et à améliorer la souplesse.',
       },
       {
         nom: 'Strong Nation',
         resa: true,
-        desc: "Entraînement poids du corps alternant renforcement musculaire et activités cardio sur le rythme de la musique.",
+        desc: 'Entraînement au poids du corps alternant renforcement musculaire et activités cardio sur le rythme de la musique.',
+      },
+      {
+        nom: 'Yoga',
+        resa: true,
+        desc: 'Discipline qui unit le physique et le mental par la posture et la respiration et vise à apporter un bien-être général.',
+      },
+      {
+        nom: 'Yin Yoga',
+        resa: true,
+        desc: 'Pratique douce et lente composée de postures maintenues plusieurs minutes. Elle favorise la détente, la souplesse, la mobilité et le relâchement des tensions.',
+      },
+      {
+        nom: 'Yogalates',
+        resa: true,
+        desc: "Gym douce à mi-chemin entre le yoga et le pilates. Basé sur le souffle et la concentration. Le cours est composé d'exercices de renforcement musculaire, phases de détente et de relaxation, postures de yoga et mouvements de pilates.",
       },
       {
         nom: 'Zumba',
@@ -166,9 +191,24 @@ export const PRESTATIONS: Prestation[] = [
         desc: "Activité physique qui permet une augmentation de la masse musculaire et permet de brûler les graisses tout en sollicitant le système cardio-vasculaire. La pratique vous aide à vous affiner en allant puiser directement dans vos cellules graisseuses.",
       },
       {
+        nom: 'Core Training',
+        resa: true,
+        desc: 'Cours ciblé sur le renforcement de la sangle abdominale et du dos, pour améliorer posture, stabilité et équilibre. Idéal pour un tronc solide et fonctionnel.',
+      },
+      {
         nom: 'Cross Training',
         resa: true,
-        desc: "Discipline à haute intensité. Des mouvements d'haltérophilie, de gymnastique et d'athlétisme sont réalisés dans le cadre d'un entraînement dit fonctionnel.",
+        desc: "Discipline à haute intensité. Des mouvements d'haltérophilie, de gymnastique et d'athlétisme sont ainsi réalisés dans le cadre d'un entraînement dit fonctionnel.",
+      },
+      {
+        nom: 'Functional Training',
+        resa: true,
+        desc: "Entraînement physique visant à améliorer les mouvements utilisés dans la vie quotidienne, le travail et le sport. Sollicite plusieurs groupes musculaires simultanément afin de développer la force, l'équilibre, la coordination, l'endurance et la mobilité.",
+      },
+      {
+        nom: 'Gym',
+        resa: true,
+        desc: 'Fondamental de la pratique reposant sur des exercices au poids de corps utilisant barres de traction, anneaux et cordes. Parfait pour développer force, contrôle, agilité et souplesse.',
       },
       {
         nom: 'Haltéro',
@@ -176,9 +216,14 @@ export const PRESTATIONS: Prestation[] = [
         desc: "Sport de force consistant à soulever des poids grâce à la maîtrise d'une technique particulière combinant vitesse dans l'exécution, souplesse, coordination et équilibre.",
       },
       {
+        nom: 'Mobilité',
+        resa: true,
+        desc: 'Permet de renforcer la flexibilité et la stabilité en axant sur la mobilité corporelle. Des exercices améliorant votre amplitude de mouvement et renforçant les muscles.',
+      },
+      {
         nom: 'Team WOD',
         resa: true,
-        desc: "Séance de Cross Training par équipe de 2. La motivation et l'effort sont différents dans la mesure où vous ne faites plus les efforts pour vous uniquement, mais aussi pour vos coéquipiers.",
+        desc: "Séance de Cross Training par équipe. La motivation et l'effort sont différents dans la mesure où vous ne faites plus les efforts pour vous uniquement mais aussi pour vos coéquipiers.",
       },
       {
         nom: 'TRX',
@@ -356,26 +401,26 @@ export const PLANNING_COLLECTIFS: Record<string, Creneau[]> = {
     { h: '9h00', nom: 'Yogalates', type: 'douceur' },
     { h: '10h15', nom: 'Gym Ball', type: 'douceur' },
     { h: '12h15', nom: 'Biking', type: 'cardio' },
-    { h: '17h30', nom: 'Abdos Flash', type: 'renfo' },
-    { h: '17h50', nom: 'Hiit', type: 'cardio' },
-    { h: '18h30', nom: 'Step', type: 'cardio' },
-    { h: '19h30', nom: 'Zumba', type: 'danse' },
+    { h: '17h15', nom: 'Abdos Flash', type: 'renfo' },
+    { h: '17h40', nom: 'Hiit', type: 'cardio' },
+    { h: '18h15', nom: 'Step Inter', type: 'cardio' },
+    { h: '19h15', nom: 'Zumba', type: 'danse' },
+    { h: '20h15', nom: 'Strong Nation', type: 'danse' },
   ],
   Mardi: [
     { h: '8h30', nom: 'Renfo Mobilité', type: 'renfo' },
     { h: '9h30', nom: 'Full Body', type: 'renfo' },
     { h: '10h30', nom: 'Gym Douce', type: 'douceur' },
     { h: '12h15', nom: 'Full Body', type: 'renfo' },
-    { h: '17h30', nom: 'Gym Ball', type: 'douceur' },
     { h: '18h00', nom: 'Pilates', type: 'douceur' },
-    { h: '19h00', nom: 'Yoga', type: 'douceur' },
-    { h: '20h00', nom: 'Strong Nation', type: 'danse' },
+    { h: '18h45', nom: 'Yoga', type: 'douceur' },
+    { h: '19h45', nom: 'Pilates', type: 'douceur' },
   ],
   Mercredi: [
     { h: '9h15', nom: 'Baby Gym', type: 'kids' },
     { h: '10h00', nom: 'Baby Gym', type: 'kids' },
     { h: '11h15', nom: 'Pilates', type: 'douceur' },
-    { h: '12h15', nom: 'Stretching', type: 'douceur' },
+    { h: '12h15', nom: 'Yin Yoga', type: 'douceur' },
     { h: '17h00', nom: 'Cardio Training', type: 'cardio' },
     { h: '18h00', nom: 'Biking', type: 'cardio' },
     { h: '19h00', nom: 'Biking', type: 'cardio' },
@@ -387,7 +432,7 @@ export const PLANNING_COLLECTIFS: Record<string, Creneau[]> = {
     { h: '10h30', nom: 'Stretching Mobilité', type: 'douceur' },
     { h: '12h15', nom: 'Step Débutant', type: 'cardio' },
     { h: '17h30', nom: 'Abdos Fessiers', type: 'renfo' },
-    { h: '18h00', nom: 'Step', type: 'cardio' },
+    { h: '18h00', nom: 'Step Inter', type: 'cardio' },
     { h: '19h00', nom: 'Full Body', type: 'renfo' },
     { h: '19h45', nom: 'Stretching Mobilité', type: 'douceur' },
   ],
@@ -403,7 +448,7 @@ export const PLANNING_COLLECTIFS: Record<string, Creneau[]> = {
   ],
   Samedi: [
     { h: '9h15', nom: 'Full Body', type: 'renfo' },
-    { h: '10h15', nom: 'Step', type: 'cardio' },
+    { h: '10h15', nom: 'Step Inter', type: 'cardio' },
   ],
 }
 
@@ -411,13 +456,14 @@ export const PLANNING_CROSS: Record<string, Creneau[]> = {
   Lundi: [
     { h: '9h15', nom: 'Cross Training', type: 'cross' },
     { h: '12h15', nom: 'Cross Training', type: 'cross' },
-    { h: '17h00', nom: 'Gym', type: 'douceur' },
+    { h: '17h00', nom: 'Gym', type: 'cross' },
     { h: '18h00', nom: 'Cross Training', type: 'cross' },
     { h: '19h00', nom: 'Haltéro', type: 'renfo' },
     { h: '20h00', nom: 'Cross Training', type: 'cross' },
   ],
   Mardi: [
     { h: '12h15', nom: 'Cross Training', type: 'cross' },
+    { h: '17h00', nom: 'Functional Training', type: 'cross' },
     { h: '18h00', nom: 'TRX', type: 'renfo' },
     { h: '19h00', nom: 'Cross Training', type: 'cross' },
     { h: '20h00', nom: 'Cross Training', type: 'cross' },
@@ -429,7 +475,7 @@ export const PLANNING_CROSS: Record<string, Creneau[]> = {
     { h: '16h00', nom: 'Cross Mini Teens', type: 'kids' },
     { h: '17h00', nom: 'Cross Teens', type: 'kids' },
     { h: '18h00', nom: 'Cross Training', type: 'cross' },
-    { h: '19h00', nom: 'Gym', type: 'douceur' },
+    { h: '19h00', nom: 'Gym', type: 'cross' },
     { h: '20h00', nom: 'Cross Training', type: 'cross' },
   ],
   Jeudi: [
@@ -442,6 +488,7 @@ export const PLANNING_CROSS: Record<string, Creneau[]> = {
   Vendredi: [
     { h: '9h15', nom: 'Cross Training', type: 'cross' },
     { h: '12h15', nom: 'Cross Training', type: 'cross' },
+    { h: '17h00', nom: 'Functional Training', type: 'cross' },
     { h: '18h00', nom: 'Cross Training', type: 'cross' },
     { h: '19h00', nom: 'Cross Training', type: 'cross' },
     { h: '20h00', nom: 'Core Training', type: 'renfo' },

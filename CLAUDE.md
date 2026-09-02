@@ -59,8 +59,10 @@ Refonte du site de La Salle, salle de sport à La Roche-sur-Foron (lasalle-gym.c
   de page, props `title` / `cta` / `image`).
 
 ## Source des données
-Tout est dans `useSiteData.ts`. Les tarifs et les plannings ont été relevés sur les
-images officielles du site actuel (grilles PNG) : ne pas les modifier sans la source.
+Tout est dans `useSiteData.ts`. Les tarifs, les plannings et les descriptions de cours
+viennent de la **brochure officielle de septembre 2026** : ne pas les modifier sans la
+source. Tous les cours collectifs et de Cross Training sont sur réservation, y compris
+ceux que la brochure ne marque pas entre parenthèses (consigne client).
 Le blog n'a aucun article réel côté client — la page affiche la seule information
 réelle disponible (horaires d'été) et renvoie vers Instagram.
 
