@@ -27,7 +27,7 @@
               <span class="tt__cat">{{ LABELS[c.type] }}</span>
             </span>
             <span class="tt__nom">{{ c.nom }}</span>
-            <span v-if="surReservation(c.nom)" class="tt__resa">Réservation</span>
+            <span v-if="surReservation(c)" class="tt__resa">Réservation</span>
           </span>
         </div>
       </div>
@@ -44,7 +44,7 @@
               <span class="pslot__cat">{{ LABELS[c.type] }}</span>
             </span>
             <span class="pslot__nom">{{ c.nom }}</span>
-            <span v-if="surReservation(c.nom)" class="pslot__resa">Sur réservation</span>
+            <span v-if="surReservation(c)" class="pslot__resa">Sur réservation</span>
           </li>
         </ul>
         <p v-else class="pday__empty">Pas de cours</p>

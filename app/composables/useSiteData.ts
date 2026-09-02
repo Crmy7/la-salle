@@ -79,10 +79,12 @@ export const PRESTATIONS: Prestation[] = [
     cours: [
       {
         nom: 'Abdos Fessiers, Flash',
+        resa: true,
         desc: "Cours spécial de 20 minutes pour renforcer la ceinture abdominale et les fessiers sans impact, avec un travail cardio d'intensité modérée.",
       },
       {
         nom: 'Animal Flow',
+        resa: true,
         desc: "Technique fonctionnelle d'entraînement quadrupédique qui améliore la force et l'endurance du corps entier, l'équilibre dynamique et l'amplitude des mouvements.",
       },
       {
@@ -92,42 +94,52 @@ export const PRESTATIONS: Prestation[] = [
       },
       {
         nom: 'Circuit Training',
+        resa: true,
         desc: "Méthode d'entraînement qui consiste à effectuer plusieurs exercices les uns après les autres. Une fois le circuit terminé, l'enchaînement est repris depuis le début.",
       },
       {
         nom: 'Full Body',
+        resa: true,
         desc: "Travail de l'ensemble des muscles, des articulations et du système cardio-respiratoire.",
       },
       {
         nom: 'Hiit',
+        resa: true,
         desc: "Entraînement court et intense ponctué de phases de récupération réduites. Permet de tonifier la silhouette rapidement.",
       },
       {
         nom: 'Gym Ball',
+        resa: true,
         desc: "Technique de gym douce avec de gros ballons. Les mouvements sont inspirés du pilates, du yoga et du stretching. Le Gym Ball permet de renforcer les muscles profonds et stabilisateurs, mais aussi de développer la souplesse.",
       },
       {
         nom: 'Gym Douce',
+        resa: true,
         desc: "Activité corporelle douce améliorant la circulation énergétique et offrant du bien-être autant dans son corps que dans son esprit.",
       },
       {
         nom: 'Pilates, Yogalates',
+        resa: true,
         desc: "Programme d'entraînement permettant de rééquilibrer les muscles du corps en se concentrant sur les principaux muscles qui interviennent dans l'équilibre du corps et le maintien de la colonne vertébrale. Renforcer et allonger les muscles, développer force et souplesse.",
       },
       {
         nom: 'Step',
+        resa: true,
         desc: "Programme cardiovasculaire avec l'utilisation d'une plateforme. Permet d'augmenter l'endurance, la coordination, et de définir les membres inférieurs.",
       },
       {
         nom: 'Stretching, Mobilité',
+        resa: true,
         desc: "Technique de gym douce qui vise à étirer les muscles en douceur et améliorer la souplesse. Permet de renforcer la flexibilité et la stabilité en axant sur la mobilité corporelle.",
       },
       {
         nom: 'Strong Nation',
+        resa: true,
         desc: "Entraînement poids du corps alternant renforcement musculaire et activités cardio sur le rythme de la musique.",
       },
       {
         nom: 'Zumba',
+        resa: true,
         desc: "Discipline sportive qui allie à la fois des mouvements chorégraphiques d'inspiration latine et des gestes toniques destinés à renforcer la musculature.",
       },
     ],
@@ -653,14 +665,13 @@ export function creneauxPrestation(cfg: DetailPrestation['planning']) {
   return out
 }
 
-/** Cours nécessitant une réservation, déduit des fiches prestations
- *  plutôt que ressaisi : une seule source de vérité. */
-const NOMS_RESA = new Set(
-  PRESTATIONS.flatMap((p) => p.cours ?? [])
-    .filter((c) => c.resa)
-    .map((c) => c.nom.toLowerCase())
-)
-
-export function surReservation(nom: string) {
-  return NOMS_RESA.has(nom.toLowerCase())
+/** Tous les cours collectifs et de Cross Training sont sur réservation.
+ *  On raisonne sur la famille du créneau et non sur son nom : les intitulés
+ *  du planning ne reprennent pas toujours ceux des fiches prestations
+ *  (« Yogalates » pour « Pilates, Yogalates », « Renfo Mobilité »…), et un
+ *  appariement par nom laissait passer la majorité des créneaux.
+ *  Seuls les cours enfants et ados font exception : ils se prennent à
+ *  l'année, pas séance par séance. */
+export function surReservation(c: Creneau) {
+  return c.type !== 'kids'
 }
