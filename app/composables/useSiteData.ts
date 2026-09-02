@@ -65,7 +65,7 @@ export const PRESTATIONS: Prestation[] = [
     slug: 'cours-collectifs',
     num: '02',
     nom: 'Cours collectifs',
-    meta: 'Du pilates à la zumba, tous niveaux',
+    meta: 'Du pilâtes à la zumba, tous niveaux',
     img: '/assets/img/cross-training-site.jpg',
     imgBw: '/assets/img/bw/cross-training-site.jpg',
     intro:
@@ -93,6 +93,11 @@ export const PRESTATIONS: Prestation[] = [
         desc: "Technique fonctionnelle d'entraînement quadrupédique qui améliore la force et l'endurance du corps entier, l'équilibre dynamique et l'amplitude des mouvements.",
       },
       {
+        nom: 'Baby Gym',
+        age: 'De la marche à 3 ans',
+        desc: "Gymnastique récréative favorisant la socialisation, l'autonomie et le développement des aptitudes motrices de base : équilibre, sauts. Présence d'un adulte indispensable. Le cours se déroule dans la salle des cours collectifs.",
+      },
+      {
         nom: 'Biking',
         resa: true,
         desc: "Programme de cyclisme en salle, dans lequel vous roulez au rythme d'une musique entraînante. Le biking améliore la capacité cardiovasculaire, brûle les graisses, sculpte les membres inférieurs, augmente la force des jambes et l'endurance musculaire.",
@@ -103,6 +108,11 @@ export const PRESTATIONS: Prestation[] = [
         desc: "Entraînement qui permet d'améliorer l'endurance de base, la fréquence cardiaque, brûler des calories et de rester en forme.",
       },
       {
+        nom: 'Core Training',
+        resa: true,
+        desc: 'Cours ciblé sur le renforcement de la sangle abdominale et du dos, pour améliorer posture, stabilité et équilibre. Idéal pour un tronc solide et fonctionnel.',
+      },
+      {
         nom: 'Full Body',
         resa: true,
         desc: "Travail de l'ensemble des muscles, des articulations et du système cardio-respiratoire.",
@@ -110,7 +120,7 @@ export const PRESTATIONS: Prestation[] = [
       {
         nom: 'Gym Ball',
         resa: true,
-        desc: "Technique de gym douce avec des gros ballons. Les mouvements sont inspirés du pilates, du yoga et du stretching. Le gym ball permet de renforcer les muscles profonds et stabilisateurs, mais aussi de développer la souplesse.",
+        desc: "Technique de gym douce avec des gros ballons. Les mouvements sont inspirés du pilâtes, du yoga et du stretching. Le gym ball permet de renforcer les muscles profonds et stabilisateurs, mais aussi de développer la souplesse.",
       },
       {
         nom: 'Gym Douce',
@@ -123,7 +133,7 @@ export const PRESTATIONS: Prestation[] = [
         desc: 'Entraînement court et intense ponctué de phases de récupération réduites, permet de tonifier la silhouette rapidement.',
       },
       {
-        nom: 'Pilates',
+        nom: 'Pilâtes',
         resa: true,
         desc: "Technique de gym douce. Programme d'entraînement permettant de rééquilibrer les muscles du corps en se concentrant sur les principaux muscles qui interviennent dans l'équilibre du corps et le maintien de la colonne vertébrale. Renforcer et allonger les muscles.",
       },
@@ -160,7 +170,7 @@ export const PRESTATIONS: Prestation[] = [
       {
         nom: 'Yogalates',
         resa: true,
-        desc: "Gym douce à mi-chemin entre le yoga et le pilates. Basé sur le souffle et la concentration. Le cours est composé d'exercices de renforcement musculaire, phases de détente et de relaxation, postures de yoga et mouvements de pilates.",
+        desc: "Gym douce à mi-chemin entre le yoga et le pilâtes. Basé sur le souffle et la concentration. Le cours est composé d'exercices de renforcement musculaire, phases de détente et de relaxation, postures de yoga et mouvements de pilâtes.",
       },
       {
         nom: 'Zumba',
@@ -412,14 +422,14 @@ export const PLANNING_COLLECTIFS: Record<string, Creneau[]> = {
     { h: '9h30', nom: 'Full Body', type: 'renfo' },
     { h: '10h30', nom: 'Gym Douce', type: 'douceur' },
     { h: '12h15', nom: 'Full Body', type: 'renfo' },
-    { h: '18h00', nom: 'Pilates', type: 'douceur' },
+    { h: '18h00', nom: 'Pilâtes', type: 'douceur' },
     { h: '18h45', nom: 'Yoga', type: 'douceur' },
-    { h: '19h45', nom: 'Pilates', type: 'douceur' },
+    { h: '19h45', nom: 'Pilâtes', type: 'douceur' },
   ],
   Mercredi: [
     { h: '9h15', nom: 'Baby Gym', type: 'kids' },
     { h: '10h00', nom: 'Baby Gym', type: 'kids' },
-    { h: '11h15', nom: 'Pilates', type: 'douceur' },
+    { h: '11h15', nom: 'Pilâtes', type: 'douceur' },
     { h: '12h15', nom: 'Yin Yoga', type: 'douceur' },
     { h: '17h00', nom: 'Cardio Training', type: 'cardio' },
     { h: '18h00', nom: 'Biking', type: 'cardio' },
@@ -440,7 +450,7 @@ export const PLANNING_COLLECTIFS: Record<string, Creneau[]> = {
     { h: '8h30', nom: 'Animal Flow', type: 'renfo' },
     { h: '9h45', nom: 'Biking', type: 'cardio' },
     { h: '11h15', nom: 'Gym Ball', type: 'douceur' },
-    { h: '12h15', nom: 'Pilates', type: 'douceur' },
+    { h: '12h15', nom: 'Pilâtes', type: 'douceur' },
     { h: '14h00', nom: 'Yoga', type: 'douceur' },
     { h: '17h30', nom: 'Core Training', type: 'renfo' },
     { h: '18h00', nom: 'Cardio Training', type: 'cardio' },
@@ -503,14 +513,14 @@ export const PLANNING_CROSS: Record<string, Creneau[]> = {
 
 /* Aperçu affiché sur l'accueil */
 export const COURS_APERCU = [
-  { nom: 'Hiit', type: 'Cardio', resa: false },
+  { nom: 'Hiit', type: 'Cardio', resa: true },
   { nom: 'Biking', type: 'Cardio', resa: true },
-  { nom: 'Cross Training', type: 'Cross', resa: true },
-  { nom: 'Pilates, Yogalates', type: 'Douceur', resa: false },
-  { nom: 'Team WOD', type: 'Cross', resa: true },
-  { nom: 'Zumba', type: 'Cardio', resa: false },
-  { nom: 'TRX', type: 'Renfo', resa: true },
-  { nom: 'Stretching, Mobilité', type: 'Douceur', resa: false },
+  { nom: 'Cross Training', type: 'Cross Training', resa: true },
+  { nom: 'Pilâtes', type: 'Gym douce', resa: true },
+  { nom: 'Team WOD', type: 'Cross Training', resa: true },
+  { nom: 'Zumba', type: 'Zumba', resa: true },
+  { nom: 'TRX', type: 'Renforcement', resa: true },
+  { nom: 'Stretching / Mobilité', type: 'Gym douce', resa: true },
 ]
 
 export const FORMULES = [
@@ -625,7 +635,7 @@ export const DETAILS: Record<string, DetailPrestation> = {
       {
         titre: 'Tous les niveaux dans la même salle',
         texte:
-          "Les coachs proposent systématiquement une version adaptée des mouvements. Débuter en Step ou en Pilates ne demande aucun prérequis, et un créneau Step Débutant est prévu au planning.",
+          "Les coachs proposent systématiquement une version adaptée des mouvements. Débuter en Step ou en Pilâtes ne demande aucun prérequis, et un créneau Step Débutant est prévu au planning.",
       },
     ],
     galerie: [
@@ -715,7 +725,7 @@ export function creneauxPrestation(cfg: DetailPrestation['planning']) {
 /** Tous les cours collectifs et de Cross Training sont sur réservation.
  *  On raisonne sur la famille du créneau et non sur son nom : les intitulés
  *  du planning ne reprennent pas toujours ceux des fiches prestations
- *  (« Yogalates » pour « Pilates, Yogalates », « Renfo Mobilité »…), et un
+ *  (« Step Inter » pour « Step », « Renfo Mobilité »…), et un
  *  appariement par nom laissait passer la majorité des créneaux.
  *  Seuls les cours enfants et ados font exception : ils se prennent à
  *  l'année, pas séance par séance. */
