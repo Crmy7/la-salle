@@ -94,6 +94,7 @@ export const PRESTATIONS: Prestation[] = [
       },
       {
         nom: 'Baby Gym',
+        resa: true,
         age: 'De la marche à 3 ans',
         desc: "Gymnastique récréative favorisant la socialisation, l'autonomie et le développement des aptitudes motrices de base : équilibre, sauts. Présence d'un adulte indispensable. Le cours se déroule dans la salle des cours collectifs.",
       },
@@ -277,6 +278,7 @@ export const PRESTATIONS: Prestation[] = [
     cours: [
       {
         nom: 'Baby Gym',
+        resa: true,
         age: 'De la marche à 3 ans',
         desc: "Gymnastique récréative favorisant la sociabilisation, l'autonomie et le développement des aptitudes motrices de base : équilibres, sauts. Présence d'un adulte indispensable.",
       },
@@ -722,13 +724,16 @@ export function creneauxPrestation(cfg: DetailPrestation['planning']) {
   return out
 }
 
-/** Tous les cours collectifs et de Cross Training sont sur réservation.
- *  On raisonne sur la famille du créneau et non sur son nom : les intitulés
- *  du planning ne reprennent pas toujours ceux des fiches prestations
- *  (« Step Inter » pour « Step », « Renfo Mobilité »…), et un
- *  appariement par nom laissait passer la majorité des créneaux.
- *  Seuls les cours enfants et ados font exception : ils se prennent à
- *  l'année, pas séance par séance. */
+/** Tout est sur réservation, sauf les cours de Cross Kids et Teens, qui se
+ *  prennent à l'année. La Baby Gym, elle, se réserve : elle se déroule dans
+ *  la salle des cours collectifs. */
+const SANS_RESERVATION = new Set([
+  'cross mini kids',
+  'cross kids',
+  'cross mini teens',
+  'cross teens',
+])
+
 export function surReservation(c: Creneau) {
-  return c.type !== 'kids'
+  return !SANS_RESERVATION.has(c.nom.toLowerCase())
 }
