@@ -1753,15 +1753,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .pgal { background: var(--noir); padding: clamp(50px, 6vw, 90px) 0; }
 .pgal__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* Autant de colonnes que de photos : deux photos ne laissent pas une
+     troisième colonne vide, une seule occupe toute la largeur. */
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   gap: var(--gutter);
 }
-.pgal__grid--solo { grid-template-columns: minmax(0, 460px); justify-content: center; }
 .pgal__grid img {
   width: 100%;
   height: clamp(220px, 26vw, 380px);
   object-fit: cover;
 }
+/* Photo seule : cadre large, recadré un peu bas (les raquettes du squash) */
+.pgal__grid--solo img { height: auto; aspect-ratio: 2 / 1; object-position: center 70%; }
 
 /* Horaires extraits */
 .phoraires { padding: clamp(70px, 9vw, 120px) 0; }
@@ -1819,8 +1823,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ptarif:not(.section--light) .ocard__periode { color: var(--os-doux); }
 
 @media (max-width: 760px) {
-  .pgal__grid { grid-template-columns: 1fr; }
+  .pgal__grid { grid-auto-flow: row; grid-template-columns: 1fr; }
   .pgal__grid img { height: 240px; }
+  .pgal__grid--solo img { height: auto; aspect-ratio: 4 / 3; }
 }
 
 /* ============================================================
