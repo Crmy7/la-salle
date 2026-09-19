@@ -389,14 +389,14 @@ export const AUTRES_ABOS = [
     lignes: ['25 € / mois · 1 cours par semaine', '40 € / mois · 2 cours par semaine'],
   },
   {
-    titre: 'Zumba Strong',
-    periode: 'Septembre à juillet',
-    lignes: ['260 €'],
-  },
-  {
     titre: 'Baby Gym',
     periode: 'Septembre à juin, hors vacances scolaires',
     lignes: ['190 €'],
+  },
+  {
+    titre: 'Zumba Strong',
+    periode: 'Septembre à juillet',
+    lignes: ['260 €'],
   },
 ]
 
