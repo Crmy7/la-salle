@@ -111,8 +111,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   padding-bottom: 2px;
 }
 /* Le trait est un pseudo-élément et non un dégradé en fond : un fond
-   de la couleur du texte fausse toute mesure de contraste du lien. */
-[data-hover-line]::after {
+   de la couleur du texte fausse toute mesure de contraste du lien.
+   ::before, car ::after porte déjà la flèche des liens .link-arrow. */
+[data-hover-line]::before {
   content: "";
   position: absolute;
   left: 0;
@@ -124,7 +125,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transform-origin: left;
   transition: transform 0.45s var(--ease-out);
 }
-[data-hover-line]:hover::after { transform: scaleX(1); }
+[data-hover-line]:hover::before { transform: scaleX(1); }
 
 .link-arrow {
   display: inline-flex;
@@ -450,29 +451,43 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   max-width: 20em;
 }
 
+/* La photo de la salle occupe toute la largeur. Dessous, sur une même
+   ligne : la légende à gauche, le lien à droite (le lien partage la
+   rangée de la figure et s'aligne sur son bas). */
 .manifesto__row {
   display: grid;
-  grid-template-columns: minmax(280px, 520px) minmax(260px, 380px);
-  justify-content: space-between;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
-  gap: 48px;
   margin-top: clamp(60px, 7vw, 120px);
 }
-.manifesto__media { position: relative; }
-.manifesto__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.manifesto__media { grid-area: 1 / 1 / 2 / 3; }
+/* Le cadre rogne lui-même la photo, qui déborde de 7 % à chaque extrémité
+   pour la parallaxe : elle ne glisse jamais sur la légende. */
+.manifesto__frame { position: relative; aspect-ratio: 2 / 1; }
+.manifesto__frame img {
+  position: absolute;
+  top: -7%;
+  left: 0;
+  width: 100%;
+  height: 114%;
+  object-fit: cover;
+}
 .manifesto__media figcaption {
-  margin-top: 12px;
+  margin-top: 16px;
   font-size: 13px;
+  line-height: 20px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--noir-doux);
 }
 .manifesto__aside {
+  grid-area: 1 / 2 / 2 / 3;
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 26px;
-  padding-bottom: 30px;
 }
+.manifesto__aside .link-arrow { line-height: 20px; }
 
 /* Masque de révélation image.
    overflow indispensable : l'image attend son animation en scale(1.25) et,
@@ -978,6 +993,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero__title-line--indent { margin-left: 0.12em; }
   .hero__bar { flex-wrap: wrap; row-gap: 12px; }
   .manifesto__row { grid-template-columns: 1fr; }
+  .manifesto__media,
+  .manifesto__aside { grid-area: auto; }
+  .manifesto__aside { align-items: flex-start; margin-top: 22px; }
+  .manifesto__frame { aspect-ratio: 4 / 3; }
   .plist__row { grid-template-columns: 1fr 40px; }
   .plist__meta { display: none; }
   .plist__preview { display: none; }

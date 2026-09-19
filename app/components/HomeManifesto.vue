@@ -8,12 +8,14 @@
         quotidien.
       </p>
       <div class="manifesto__row">
-        <figure class="manifesto__media" data-mask>
-          <img
-            src="/assets/img/salle-interieur.jpg"
-            alt="L'intérieur de La Salle à La Roche-sur-Foron"
-            data-parallax-img
-          >
+        <figure class="manifesto__media">
+          <div class="manifesto__frame" data-mask>
+            <img
+              src="/assets/img/salle-interieur.jpg"
+              alt="L'intérieur de La Salle à La Roche-sur-Foron"
+              data-parallax-img
+            >
+          </div>
           <figcaption>Chez nous, avenue Jean Morin</figcaption>
         </figure>
         <div class="manifesto__aside">

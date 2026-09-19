@@ -158,8 +158,9 @@ Objectif tenu : **0 constat** du détecteur, sur les sources et sur les 11 pages
   phrases sont en casse normale.
 - Titres sous 760px : taille déduite de la largeur utile et du mot le plus long
   (« Musculation », « Réservation »), sinon le masque des lignes rogne le mot.
-- Soulignés animés en pseudo-élément (`::after`), jamais en `background` dégradé : un
-  fond de la couleur du texte fausse la mesure de contraste.
+- Soulignés animés en pseudo-élément (`::before`, `::after` portant la flèche des
+  `.link-arrow`), jamais en `background` dégradé : un fond de la couleur du texte
+  fausse la mesure de contraste.
 - Photos en parallaxe (`.phead`, `.cta`) : c'est leur cadre (`inset: 0`,
   `overflow: hidden`) qui rogne l'image débordante, pas un `clip-path` sur la section
   (ligne d'anticrénelage au bas d'une hauteur fractionnaire, différente sous WordPress).
