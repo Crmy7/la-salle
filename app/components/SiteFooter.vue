@@ -6,13 +6,13 @@
           <img src="/assets/img/logo-noir.png" alt="La Salle, Stronger Everyday" class="footer__logo" >
         </div>
         <div class="footer__col">
-          <h4 class="footer__head">La salle</h4>
+          <h2 class="footer__head">La salle</h2>
           <nav class="footer__nav">
             <NuxtLink v-for="l in nav" :key="l.to" :to="l.to" data-hover-line>{{ l.label }}</NuxtLink>
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__head">Contact</h4>
+          <h2 class="footer__head">Contact</h2>
           <p>{{ SALLE.adresse[0] }}<br >{{ SALLE.adresse[1] }}<br >{{ SALLE.adresse[2] }}</p>
           <p>
             <a :href="`tel:${SALLE.telHref}`" data-hover-line>{{ SALLE.tel }}</a><br >
@@ -21,7 +21,7 @@
           </p>
         </div>
         <div class="footer__col">
-          <h4 class="footer__head">Horaires accueil</h4>
+          <h2 class="footer__head">Horaires d'accueil</h2>
           <p><span v-for="(h, i) in SALLE.accueil" :key="i">{{ h }}<br ></span></p>
           <p class="footer__access">{{ SALLE.accesLibre }}<br >tous les jours</p>
         </div>

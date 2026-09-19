@@ -30,10 +30,6 @@
     </div>
     <div class="hero__bar" data-hero-bar>
       <span class="hero__bar-item">La Roche-sur-Foron, Haute-Savoie</span>
-      <span class="hero__bar-item hero__bar-item--scroll" aria-hidden="true">
-        <span class="hero__scroll-track"><span class="hero__scroll-thumb" /></span>
-        Défiler
-      </span>
       <span class="hero__bar-item hero__bar-item--live">
         <span class="live-dot" :class="{ 'is-closed': !isOpen }" />
         <span>{{ status }}</span>

@@ -55,8 +55,7 @@
       <div class="container pacces__inner">
         <h2 class="section-title" data-title-reveal>{{ detail.acces.titre }}</h2>
         <ul class="pacces__list">
-          <li v-for="(l, i) in detail.acces.lignes" :key="i" data-reveal-up>
-            <span class="pacces__num">{{ String(i + 1).padStart(2, '0') }}</span>
+          <li v-for="l in detail.acces.lignes" :key="l" data-reveal-up>
             <p>{{ l }}</p>
           </li>
         </ul>
@@ -69,11 +68,12 @@
         <h2 class="section-title section-title--light" data-title-reveal>
           {{ presta.coursTitre }}
         </h2>
+        <p v-if="coursToutResa" class="courses__resa">Tous les cours sont sur réservation.</p>
         <ul class="courses__grid">
           <li v-for="c in presta.cours" :key="c.nom" class="ccard" data-reveal-up>
             <h3 class="ccard__name">{{ c.nom }}</h3>
             <span v-if="c.age" class="ccard__age">{{ c.age }}</span>
-            <span v-if="c.resa" class="ccard__resa">Sur réservation</span>
+            <span v-if="c.resa && !coursToutResa" class="ccard__resa">Sur réservation</span>
             <p class="ccard__desc">{{ c.desc }}</p>
           </li>
         </ul>
@@ -197,6 +197,8 @@ if (!presta.value) {
 
 const detail = computed(() => DETAILS[slug.value])
 const creneaux = computed(() => creneauxPrestation(detail.value.planning))
+/* Tous les cours de la liste sur réservation : dit une fois sous le titre */
+const coursToutResa = computed(() => !!presta.value?.cours?.length && presta.value.cours.every((c) => c.resa))
 const grille = computed(() =>
   detail.value.tarif.grille ? ABONNEMENTS.find((g) => g.slug === detail.value.tarif.grille) : undefined
 )

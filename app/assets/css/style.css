@@ -7,11 +7,13 @@
   /* Palette client */
   --noir: #171314;
   --charbon: #231F20;
-  --os: #F2EDE4;
-  --os-70: rgba(242, 237, 228, 0.7);
-  --os-40: rgba(242, 237, 228, 0.4);
-  --os-15: rgba(242, 237, 228, 0.15);
-  --os-08: rgba(242, 237, 228, 0.08);
+  /* Clair : blanc. Le crème d'origine ne faisait pas partie de la palette
+     client, et ne tenait pas le contraste AA sur le rouge (4,35:1). */
+  --os: #FFFFFF;
+  --os-70: rgba(255, 255, 255, 0.7);
+  --os-40: rgba(255, 255, 255, 0.4);
+  --os-15: rgba(255, 255, 255, 0.15);
+  --os-08: rgba(255, 255, 255, 0.08);
   --rouge: #DD0026;
   --bordeaux: #600C1C;
   --brique: #842B1D;
@@ -20,6 +22,13 @@
   --noir-70: rgba(23, 19, 20, 0.7);
   --noir-45: rgba(23, 19, 20, 0.45);
   --noir-12: rgba(23, 19, 20, 0.12);
+
+  /* Textes secondaires : 68 % tient le contraste AA (4,5:1) sur le noir, le
+     charbon, le bordeaux, la brique et le blanc. Sur le rouge et le corail,
+     aucun texte transparent ne passe : texte plein. Les valeurs à 40-45 %
+     restent réservées aux filets et aux bordures. */
+  --os-doux: rgba(255, 255, 255, 0.68);
+  --noir-doux: rgba(23, 19, 20, 0.68);
 
   /* Typo */
   --f-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
@@ -89,9 +98,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .section-title--light { color: var(--os); }
 
 /* Petits libellés : Archivo médium, capitales espacées */
-.plist__num, .plist__meta, .hero__bar-item, .preloader__city,
-.planning__type, .planning__tag, .tcard__num, .tcard__cta, .footer__head,
-.menu__num, .btn__label, .link-arrow, .manifesto__media figcaption,
+.plist__meta, .hero__bar-item, .preloader__city,
+.planning__type, .tcard__cta, .footer__head,
+.btn__label, .link-arrow, .manifesto__media figcaption,
 .gallery__item figcaption, .tarifs__note, .footer__legal, .footer__access {
   font-weight: 500;
 }
@@ -99,14 +108,23 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* Liens soulignés animés */
 [data-hover-line] {
   position: relative;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-size: 0% 1px;
-  background-repeat: no-repeat;
-  background-position: left 100%;
-  transition: background-size 0.45s var(--ease-out);
   padding-bottom: 2px;
 }
-[data-hover-line]:hover { background-size: 100% 1px; }
+/* Le trait est un pseudo-élément et non un dégradé en fond : un fond
+   de la couleur du texte fausse toute mesure de contraste du lien. */
+[data-hover-line]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease-out);
+}
+[data-hover-line]:hover::after { transform: scaleX(1); }
 
 .link-arrow {
   display: inline-flex;
@@ -156,7 +174,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   inset: 0;
   z-index: 1000;
   background: var(--os);
-  pointer-events: none;
   clip-path: inset(0 0 0 0);
 }
 
@@ -191,6 +208,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transform: translateY(105%);
 }
 
+/* Texte décoratif du rideau (aria-hidden) : dessiné en pseudo-élément, il
+   reste hors du texte de la page, que les outils d'analyse verraient sinon
+   chevaucher le contenu qu'il recouvre pendant le chargement. */
+.preloader__mark::before,
+.preloader__city::before { content: attr(data-text); }
+
 .preloader__city {
   position: absolute;
   left: var(--pad);
@@ -199,7 +222,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
   opacity: 0;
 }
 
@@ -254,11 +277,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   width: 30px;
   height: 2px;
   background: var(--os);
-  transition: transform 0.45s var(--ease-expo), width 0.3s ease;
+  /* Le trait se raccourcit par masquage : animer width relancerait la mise en page */
+  transition: transform 0.45s var(--ease-expo), clip-path 0.3s ease;
 }
-.header__burger:hover .header__burger-line:nth-child(2) { width: 20px; }
+.header__burger:hover .header__burger-line:nth-child(2) { clip-path: inset(0 33.4% 0 0); }
 .menu-open .header__burger-line:nth-child(1) { transform: translateY(4.5px) rotate(45deg); }
-.menu-open .header__burger-line:nth-child(2) { transform: translateY(-4.5px) rotate(-45deg); width: 30px; }
+.menu-open .header__burger-line:nth-child(2) { transform: translateY(-4.5px) rotate(-45deg); clip-path: inset(0); }
 
 /* ============================================================
    MENU OVERLAY
@@ -294,11 +318,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   padding: 0.5vh 0;
   overflow: hidden;
 }
-.menu__num {
-  font-size: 13px;
-  color: var(--corail);
-  letter-spacing: 0.1em;
-}
 .menu__word {
   display: inline-block;
   font-size: clamp(30px, min(7.2vh, 8.4vw), 84px);
@@ -310,20 +329,17 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   color: var(--os);
   transition: color 0.35s ease, transform 0.5s var(--ease-out);
 }
-.menu__link:hover .menu__word { color: var(--rouge); transform: translateX(14px); }
+.menu__link:hover .menu__word { color: var(--corail); transform: translateX(14px); }
 .menu__footer {
   display: flex;
   flex-wrap: wrap;
   gap: 40px;
   justify-content: flex-start;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   line-height: 1.8;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   color: var(--os-70);
 }
-.menu__col a:hover { color: var(--rouge); }
 
 /* ============================================================
    HERO
@@ -408,10 +424,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   gap: 24px;
   padding: 20px var(--pad);
   border-top: 1px solid var(--os-15);
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--os-40);
+  font-size: 14px;
+  color: var(--os-doux);
 }
 .hero__bar-item { display: inline-flex; align-items: center; gap: 12px; }
 .hero__bar-item--live { color: var(--os-70); }
@@ -420,63 +434,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   height: 7px;
   border-radius: 50%;
   background: var(--rouge);
-  animation: pulse 2.2s ease-in-out infinite;
 }
-.live-dot.is-closed { background: var(--os-40); animation: none; }
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(221, 0, 38, 0.55); }
-  55% { box-shadow: 0 0 0 8px rgba(221, 0, 38, 0); }
-}
-.hero__scroll-track {
-  width: 1px;
-  height: 34px;
-  background: var(--os-15);
-  position: relative;
-  overflow: hidden;
-}
-.hero__scroll-thumb {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 40%;
-  background: var(--rouge);
-  animation: scrollhint 1.9s var(--ease-expo) infinite;
-}
-@keyframes scrollhint {
-  0% { transform: translateY(-110%); }
-  60%, 100% { transform: translateY(260%); }
-}
-
-/* ============================================================
-   BAND / MARQUEE
-   ============================================================ */
-.band {
-  background: var(--rouge);
-  color: var(--os);
-  overflow: clip;
-  padding: clamp(14px, 1.6vw, 26px) 0;
-}
-.band__track { display: flex; width: max-content; will-change: transform; }
-.band__group {
-  display: flex;
-  align-items: center;
-  gap: clamp(22px, 2.6vw, 44px);
-  padding-right: clamp(22px, 2.6vw, 44px);
-  white-space: nowrap;
-}
-.band__group span {
-  font-size: clamp(20px, 2.8vw, 42px);
-  font-weight: 800;
-  font-variation-settings: "wdth" 120;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-}
-.band__group i {
-  font-style: normal;
-  font-size: clamp(12px, 1.2vw, 18px);
-  transform: translateY(-0.1em);
-}
+.live-dot.is-closed { background: var(--os-40); }
 
 /* ============================================================
    MANIFESTO
@@ -486,11 +445,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: clamp(24px, 3.6vw, 56px);
   font-weight: 640;
   font-variation-settings: "wdth" 108;
-  line-height: 1.14;
+  line-height: 1.32;
   letter-spacing: -0.015em;
   max-width: 20em;
 }
-.manifesto__text .w { opacity: 0.12; }
 
 .manifesto__row {
   display: grid;
@@ -507,7 +465,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
 }
 .manifesto__aside {
   display: flex;
@@ -515,7 +473,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   gap: 26px;
   padding-bottom: 30px;
 }
-.manifesto__aside p { font-size: 17px; line-height: 1.7; color: var(--noir-70); }
 
 /* Masque de révélation image.
    overflow indispensable : l'image attend son animation en scale(1.25) et,
@@ -527,32 +484,40 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* ============================================================
    STATS
    ============================================================ */
-.stats { padding-bottom: clamp(90px, 11vw, 180px); }
-.stats__grid {
+.stats { padding: 0 0 clamp(70px, 8vw, 130px); }
+.stats__inner {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 340px);
+  align-items: end;
+  gap: clamp(32px, 5vw, 90px);
+  padding-top: clamp(36px, 4vw, 60px);
   border-top: 1px solid var(--noir-12);
 }
-.stats__item {
-  padding: clamp(28px, 3vw, 48px) clamp(4px, 1.6vw, 28px) 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.stats__value {
-  font-size: clamp(38px, 5vw, 84px);
+.stats__lead {
+  font-size: clamp(34px, 5.2vw, 84px);
   font-weight: 800;
-  font-variation-settings: "wdth" 120;
+  font-variation-settings: "wdth" 118;
   letter-spacing: -0.02em;
-  line-height: 1;
+  line-height: 1.02;
   color: var(--noir);
+  max-width: 15ch;
+  /* Lignes équilibrées : « 7. » ne reste pas seul en fin de phrase */
+  text-wrap: balance;
 }
-.stats__item:nth-child(4) .stats__value { color: var(--rouge); }
 .stats__label {
+  margin-bottom: 14px;
   font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--noir-doux);
+}
+.stats__hours li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--noir-12);
+  font-size: 17px;
   line-height: 1.5;
-  color: var(--noir-45);
-  max-width: 24ch;
+  color: var(--noir);
 }
 
 /* ============================================================
@@ -570,7 +535,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .plist__row {
   position: relative;
   display: grid;
-  grid-template-columns: 60px 1fr auto 60px;
+  grid-template-columns: 1fr auto 60px;
   align-items: center;
   gap: clamp(16px, 2.4vw, 44px);
   padding: clamp(22px, 2.6vw, 40px) var(--pad);
@@ -588,12 +553,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   z-index: -1;
 }
 .plist__row:hover::before { transform: scaleY(1); transform-origin: top; }
-.plist__num {
-  font-size: 13px;
-  color: var(--os-40);
-  letter-spacing: 0.1em;
-  transition: color 0.35s ease;
-}
 .plist__name {
   font-size: clamp(24px, 3.5vw, 56px);
   font-weight: 800;
@@ -604,10 +563,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: color 0.35s ease, transform 0.5s var(--ease-out);
 }
 .plist__meta {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--os-40);
+  font-size: 15px;
+  color: var(--os-doux);
   text-align: right;
   transition: color 0.35s ease;
 }
@@ -616,10 +573,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   justify-self: end;
   transition: transform 0.45s var(--ease-out), color 0.35s ease;
 }
-.plist__row:hover .plist__num,
-.plist__row:hover .plist__meta { color: var(--noir-70); }
-.plist__row:hover .plist__name { color: var(--noir); transform: translateX(10px); }
-.plist__row:hover .plist__arrow { color: var(--noir); transform: rotate(-45deg); }
+/* Sur le rouge, le texte reste clair : le noir n'y atteint que 3,6:1 */
+.plist__row:hover .plist__meta { color: var(--os); }
+.plist__row:hover .plist__name { transform: translateX(10px); }
+.plist__row:hover .plist__arrow { transform: rotate(-45deg); }
 
 .plist__preview {
   position: fixed;
@@ -692,7 +649,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--os-40);
+  color: var(--os-doux);
 }
 
 /* ============================================================
@@ -738,28 +695,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
 }
-.planning__tag {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--noir-45);
-}
-.planning__tag--resa { color: var(--terre); }
 
 /* ============================================================
    QUOTE
    ============================================================ */
 .dark-run {
   position: relative;
-  /* Deux foyers au lieu de trois et six arrêts au lieu de onze : sur un bloc
-     de plus de 1700px, chaque arrêt supplémentaire coûte du repaint au scroll.
-     Le falloff en puissance suffit à éviter les anneaux. */
-  background:
-    radial-gradient(112% 26% at 4% 23%, rgba(118, 14, 34, 1.000) 0%, rgba(118, 14, 34, 0.585) 20%, rgba(118, 14, 34, 0.293) 40%, rgba(118, 14, 34, 0.111) 60%, rgba(118, 14, 34, 0.021) 80%, rgba(118, 14, 34, 0.000) 100%),
-    radial-gradient(74% 20% at 90% 11%, rgba(140, 46, 31, 0.550) 0%, rgba(140, 46, 31, 0.322) 20%, rgba(140, 46, 31, 0.161) 40%, rgba(140, 46, 31, 0.061) 60%, rgba(140, 46, 31, 0.012) 80%, rgba(140, 46, 31, 0.000) 100%),
-    var(--noir);
+  /* Fond plein : un halo radial sur fond sombre est un motif d'interface générée */
+  background: var(--noir);
 }
 
 .quote {
@@ -772,12 +717,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 640;
   font-style: italic;
   font-variation-settings: "wdth" 106;
-  line-height: 1.16;
+  line-height: 1.32;
   letter-spacing: -0.015em;
   color: var(--os);
   max-width: 18em;
 }
-.quote__text .w { opacity: 0.14; }
 
 /* ============================================================
    TARIFS
@@ -797,10 +741,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   padding: clamp(26px, 2.6vw, 44px);
   background: var(--charbon);
   border: 1px solid var(--os-08);
-  transition: transform 0.5s var(--ease-out), border-color 0.4s ease, background-color 0.4s ease;
+  transition: border-color 0.4s ease, background-color 0.4s ease;
 }
-.tcard:hover { transform: translateY(-10px); border-color: var(--os-15); }
-.tcard__num { font-size: 13px; letter-spacing: 0.1em; color: var(--os-40); }
+.tcard:hover { border-color: var(--os-15); }
 .tcard__name {
   font-size: clamp(28px, 2.6vw, 44px);
   font-weight: 800;
@@ -822,17 +765,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .tcard:hover .tcard__cta span { transform: translateX(6px); }
 
 .tcard--premium { background: var(--rouge); border-color: var(--rouge); color: var(--os); }
-.tcard--premium .tcard__num { color: var(--os-40); }
-.tcard--premium .tcard__desc { color: var(--os-70); }
+.tcard--premium .tcard__desc { color: var(--os); }
 .tcard--premium:hover { background: var(--brique); border-color: var(--brique); }
 
 .tarifs__note {
   margin-top: 34px;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  line-height: 1.9;
-  color: var(--os-40);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--os-doux);
   max-width: 62ch;
 }
 
@@ -842,18 +782,22 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .cta {
   position: relative;
   background: var(--noir);
-  overflow: clip;
 }
 
 /* Le lieu en fond : la porte qu'on pousse est une vraie porte */
+/* Même cadre que l'en-tête de page : la photo déborde de 8 % pour la
+   parallaxe, et c'est son cadre qui la rogne, pas la section. */
 .cta__media {
   position: absolute;
-  inset: -8% 0;
+  inset: 0;
   overflow: hidden;
 }
 .cta__media img {
+  position: absolute;
+  top: -8%;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 116%;
   object-fit: cover;
 }
 .cta__veil {
@@ -911,7 +855,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--os-40);
+  color: var(--os-doux);
 }
 .cta__addr {
   font-size: 15px;
@@ -951,14 +895,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
   margin-bottom: 20px;
 }
 .footer__col p { font-size: 15px; line-height: 1.8; color: var(--noir-70); }
 .footer__col p + p { margin-top: 16px; }
 .footer__nav { display: flex; flex-direction: column; gap: 10px; }
 .footer__nav a { font-size: 15px; width: fit-content; }
-.footer__access { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--terre); }
+.footer__access { font-size: 15px; font-weight: 600; color: var(--noir); }
 
 .footer__wordmark {
   display: flex;
@@ -975,13 +919,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   text-transform: uppercase;
   white-space: nowrap;
   display: inline-block;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--noir-45);
-  background: linear-gradient(90deg, var(--noir) 0%, var(--noir) 50%, transparent 50%);
-  background-size: 200% 100%;
-  background-position: 100% 0;
-  -webkit-background-clip: text;
-  background-clip: text;
+  color: var(--noir);
 }
 .footer__legal {
   display: flex;
@@ -990,10 +928,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   gap: 14px;
   padding: 22px 0 26px;
   border-top: 1px solid var(--noir-12);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--noir-45);
+  font-size: 14px;
+  color: var(--noir-doux);
 }
 
 /* ============================================================
@@ -1008,16 +944,23 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (max-width: 1080px) {
   .header__nav { display: none; }
   .header__burger { display: flex; }
-  .stats__grid { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
+  .stats__inner { grid-template-columns: 1fr; }
   .tarifs__grid { grid-template-columns: 1fr; }
   .tcard { min-height: 0; }
-  .cta__inner { grid-template-columns: 1fr; align-items: start; }
+  .cta__inner { grid-template-columns: minmax(0, 1fr); align-items: start; }
   .cta__panel { width: 100%; max-width: 460px; }
   .footer__grid { grid-template-columns: 1fr 1fr; row-gap: 50px; }
 }
 
 @media (max-width: 620px) {
   .header__right .btn { display: none; }
+}
+
+/* Sur les plus petits écrans, un libellé de bouton peut passer à la ligne
+   plutôt que d'élargir la page. */
+@media (max-width: 400px) {
+  .btn { padding-inline: 22px; }
+  .btn__label { white-space: normal; text-align: center; }
 }
 
 @media (max-width: 760px) {
@@ -1027,12 +970,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
      Le contenu occupe 505px au plus serré (320px de large). */
   .hero { min-height: 640px; }
 
-  .section-title { font-size: clamp(36px, 11vw, 64px); }
+  /* « Réservation », le mot le plus long des titres de section, mesure
+     8,6 em : au-delà de cette taille il serait rogné par son masque. */
+  .section-title { font-size: clamp(28px, calc((100vw - 2 * var(--pad)) / 8.8), 64px); }
+  /* « Musculation ? » : même calcul pour le titre du bandeau final */
+  .cta__title { font-size: min(clamp(36px, 5.4vw, 88px), calc((100vw - 2 * var(--pad)) / 8.2)); }
   .hero__title-line--indent { margin-left: 0.12em; }
   .hero__bar { flex-wrap: wrap; row-gap: 12px; }
-  .hero__bar-item--scroll { display: none; }
   .manifesto__row { grid-template-columns: 1fr; }
-  .plist__row { grid-template-columns: 40px 1fr 40px; }
+  .plist__row { grid-template-columns: 1fr 40px; }
   .plist__meta { display: none; }
   .plist__preview { display: none; }
   .planning__grid { grid-template-columns: 1fr; }
@@ -1055,12 +1001,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    REDUCED MOTION
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
+  /* 0s et non 0,001s : transition-property valant « all » par défaut, une
+     durée infime transforme chaque changement de style en transition, et un
+     script qui mesure juste après (taille du « LA SALLE ») lit l'ancienne valeur. */
   *, *::before, *::after {
-    animation-duration: 0.001s !important;
+    animation-duration: 0s !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.001s !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
   }
-  body::after { animation: none; }
   [data-mask] { clip-path: none; }
   [data-mask] img { transform: none; }
 }
@@ -1070,13 +1019,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    ============================================================ */
 .phead {
   position: relative;
-  overflow: clip;
   background: var(--noir);
 }
-.phead__media { position: absolute; inset: -8% 0; overflow: hidden; }
+/* Le cadre de la photo épouse l'en-tête et rogne lui-même l'image, qui
+   déborde de 8 % à chaque extrémité pour la parallaxe. Un rognage par
+   overflow tombe sur un pixel entier, là où un clip-path sur une hauteur
+   fractionnaire laisse une ligne d'anticrénelage au bas de l'en-tête. */
+.phead__media { position: absolute; inset: 0; overflow: hidden; }
 .phead__media img {
+  position: absolute;
+  top: -8%;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 116%;
   object-fit: cover;
 }
 .phead__veil {
@@ -1136,9 +1091,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.9s var(--ease-out);
 }
-.ptile:hover .ptile__media img { transform: scale(1.05); }
 .ptile__veil {
   position: absolute;
   inset: 0;
@@ -1147,15 +1100,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .ptile:hover .ptile__veil { opacity: 0.82; }
 
-.ptile__num {
-  position: absolute;
-  top: clamp(16px, 1.5vw, 24px);
-  left: clamp(16px, 1.5vw, 24px);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  color: var(--os-70);
-}
 .ptile__go {
   position: absolute;
   top: clamp(14px, 1.4vw, 22px);
@@ -1186,12 +1130,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   color: var(--os);
 }
 .ptile__meta {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
   line-height: 1.5;
-  color: var(--os-70);
+  color: var(--os);
   max-width: 34ch;
 }
 
@@ -1219,7 +1161,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
   margin-bottom: 24px;
 }
 .pdetail__fact {
@@ -1235,7 +1177,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
 }
 .pdetail__fact dd { font-size: clamp(16px, 1.35vw, 20px); font-weight: 600; }
 .pdetail__side { display: flex; flex-direction: column; align-items: flex-start; gap: 26px; }
@@ -1246,7 +1188,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .courses .section-title { margin-bottom: clamp(40px, 5vw, 70px); }
 .courses__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: var(--gutter);
 }
 .ccard {
@@ -1258,7 +1200,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   gap: 10px;
   transition: border-color 0.4s ease, transform 0.5s var(--ease-out);
 }
-.ccard:hover { border-color: var(--os-15); transform: translateY(-6px); }
+.ccard:hover { border-color: var(--os-15); }
 .ccard__name {
   font-size: clamp(19px, 1.7vw, 24px);
   font-weight: 700;
@@ -1267,8 +1209,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   letter-spacing: -0.01em;
   line-height: 1.1;
 }
-.ccard__age,
-.ccard__resa {
+.ccard__age {
   align-self: flex-start;
   font-size: 12px;
   font-weight: 500;
@@ -1276,7 +1217,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   letter-spacing: 0.1em;
 }
 .ccard__age { color: var(--corail); }
-.ccard__resa { color: var(--terre); }
+.ccard__resa {
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--os);
+}
+.courses__resa {
+  margin: -10px 0 clamp(28px, 3vw, 44px);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--os);
+}
 .ccard__desc { font-size: 15px; line-height: 1.7; color: var(--os-70); }
 
 /* Navigation entre prestations */
@@ -1295,7 +1249,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
 }
 .pnav__name {
   font-size: clamp(18px, 2vw, 28px);
@@ -1310,14 +1264,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
 }
 
 /* ============================================================
    TARIFS
    ============================================================ */
 .tgrids { padding: clamp(70px, 9vw, 130px) 0; }
-.tgrid { padding-bottom: clamp(50px, 6vw, 90px); }
+/* Espacement en marge et non en padding : le titre du tableau suivant
+   doit se détacher du bloc précédent, pas s'y coller. */
+.tgrid { margin-bottom: clamp(50px, 6vw, 90px); }
 .tgrid__head { margin-bottom: 28px; }
 .tgrid__title {
   font-size: clamp(28px, 3.4vw, 52px);
@@ -1352,7 +1308,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.11em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
   border-bottom: 1px solid var(--noir-12);
 }
 .ttable tbody th {
@@ -1367,7 +1323,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
   margin-top: 4px;
 }
 .ttable tbody td {
@@ -1386,21 +1342,21 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
 }
 .ttable tbody tr:first-child td span { color: var(--rouge); }
 
-.ttable--dark thead th { color: var(--os-40); border-bottom-color: var(--os-15); }
+.ttable--dark thead th { color: var(--os-doux); border-bottom-color: var(--os-15); }
 .ttable--dark tbody th,
 .ttable--dark tbody td { border-bottom-color: var(--os-15); }
-.ttable--dark tbody th em { color: var(--os-40); }
-.ttable--dark tbody td em { color: var(--os-40); }
+.ttable--dark tbody th em { color: var(--os-doux); }
+.ttable--dark tbody td em { color: var(--os-doux); }
 
 .tpass { background: var(--noir); padding: clamp(70px, 9vw, 130px) 0; }
 .tpass .section-title { margin-bottom: clamp(40px, 5vw, 70px); }
 .tpass__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
   gap: clamp(40px, 5vw, 80px);
 }
 .tpass__title {
@@ -1412,19 +1368,18 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .tpass__note {
   margin-top: 18px;
-  font-size: 13px;
+  max-width: 62ch;
+  font-size: 15px;
   font-weight: 500;
   line-height: 1.7;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--os-40);
+  color: var(--os-doux);
 }
 
 .tother { padding: clamp(70px, 9vw, 130px) 0; }
 .tother .section-title { margin-bottom: clamp(40px, 5vw, 70px); }
 .tother__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: var(--gutter);
 }
 .ocard {
@@ -1442,22 +1397,18 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   line-height: 1.1;
 }
 .ocard__periode {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
 }
 .ocard__lines { margin-top: 8px; display: flex; flex-direction: column; gap: 8px; }
 .ocard__lines li { font-size: clamp(16px, 1.4vw, 20px); font-weight: 600; }
 .tother__note {
   margin-top: 34px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  line-height: 1.9;
-  color: var(--noir-45);
+  line-height: 1.7;
+  color: var(--noir-doux);
   max-width: 64ch;
 }
 
@@ -1477,12 +1428,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
   border: 1px solid var(--noir-12);
   border-radius: 2px;
   transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
-.ptab:hover { color: var(--noir); border-color: var(--noir-45); }
+.ptab:hover { color: var(--noir); border-color: var(--noir-doux); }
 .ptab.is-active { background: var(--noir); border-color: var(--noir); color: var(--os); }
 
 /* Chaque jour est une carte : la séparation vient du fond et de l'espace,
@@ -1491,7 +1442,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   display: flex;
   flex-direction: column;
   padding: clamp(16px, 1.3vw, 22px);
-  background: #FAF7F1;
+  background: #F6F5F5;
   border: 1px solid var(--noir-12);
   border-radius: 2px;
 }
@@ -1511,7 +1462,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
 }
 
 .pslot {
@@ -1531,7 +1482,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
   white-space: nowrap;
 }
 .pslot__h {
@@ -1551,25 +1502,31 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: color 0.3s ease;
 }
 .pslot:hover .pslot__nom { color: var(--rouge); }
-.pslot__nom { color: var(--noir-70); }
 .pslot__resa {
   display: block;
   margin-top: 5px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--terre);
+  color: var(--rouge);
 }
+/* Journée entièrement sur réservation : dit une fois sous le nom du jour */
+.pday__resa {
+  padding-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--rouge);
+}
+.pslot__nom { color: var(--noir-70); }
 
 .planning-page__note {
   margin-top: 26px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  line-height: 1.8;
-  color: var(--noir-45);
+  line-height: 1.7;
+  max-width: 70ch;
+  color: var(--noir-doux);
   max-width: 62ch;
 }
 
@@ -1641,18 +1598,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: color 0.3s ease;
 }
 .cblock__big--link:hover { color: var(--rouge); }
-.cblock .link-arrow { margin-top: 14px; color: var(--noir-45); }
+.cblock .link-arrow { margin-top: 14px; color: var(--noir-doux); }
 .cblock .link-arrow:hover { color: var(--noir); }
 .cblock__mail { font-size: clamp(16px, 1.4vw, 20px); font-weight: 600; }
 .cblock__hours { display: flex; flex-direction: column; gap: 8px; }
 .cblock__hours li { font-size: 16px; color: var(--noir-70); }
 .cblock__access {
   margin-top: 14px;
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: var(--terre);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--noir);
 }
 
 .contact__form {
@@ -1676,7 +1631,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.11em;
-  color: var(--os-40);
+  color: var(--os-doux);
 }
 .cfield__label em { font-style: normal; text-transform: none; letter-spacing: 0; }
 .cfield input,
@@ -1686,7 +1641,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font: inherit;
   font-size: 16px;
   color: var(--os);
-  background: rgba(242, 237, 228, 0.05);
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--os-15);
   border-radius: 2px;
   transition: border-color 0.3s ease, background-color 0.3s ease;
@@ -1696,13 +1651,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .cfield textarea:focus {
   outline: none;
   border-color: var(--rouge);
-  background: rgba(242, 237, 228, 0.08);
+  background: rgba(255, 255, 255, 0.08);
 }
 .cform__hint {
-  font-size: 13px;
+  max-width: 62ch;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.7;
-  color: var(--os-40);
+  color: var(--os-doux);
 }
 
 /* ============================================================
@@ -1723,7 +1679,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 @media (max-width: 760px) {
-  .phead__title { font-size: clamp(40px, 13vw, 68px); }
+  /* Le mot le plus long (« Musculation ») mesure 7,54 em en largeur 100 :
+     la taille se déduit de la largeur utile pour qu'aucun titre ne déborde. */
+  .phead__title {
+    font-size: clamp(30px, calc((100vw - 2 * var(--pad)) / 7.9), 68px);
+    font-variation-settings: "wdth" 100;
+  }
   .pdetail__fact { grid-template-columns: 1fr; gap: 6px; }
   .nitem { grid-template-columns: 1fr; gap: 16px; }
   .cform__row { grid-template-columns: 1fr; }
@@ -1739,15 +1700,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .tscroll-hint {
     display: block;
     margin-top: 12px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--noir-45);
+    color: var(--noir-doux);
   }
-  .tscroll-hint--dark { color: var(--os-40); }
+  .tscroll-hint--dark { color: var(--os-doux); }
   .ttable { min-width: 460px; }
   .ttable th, .ttable td { padding: 14px 14px; }
+  /* Le tableau défile jusqu'au bord de l'écran, avec la même marge aux
+     deux extrémités : la colonne coupée à droite annonce la suite. */
+  .tgrids .tgrid__scroll {
+    margin-inline: calc(var(--pad) * -1);
+    padding-inline: var(--pad);
+  }
 }
 
 /* ============================================================
@@ -1795,16 +1760,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .pacces__list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: clamp(24px, 3vw, 48px);
 }
-.pacces__list li { display: flex; flex-direction: column; gap: 14px; }
-.pacces__num {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  color: var(--terre);
-}
+.pacces__list li { padding-top: 22px; border-top: 1px solid var(--noir-12); }
 .pacces__list p {
   font-size: clamp(16px, 1.4vw, 20px);
   line-height: 1.6;
@@ -1825,7 +1784,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ptarif__box > .tgrid__scroll { width: 100%; }
 .ptarif__autres {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: var(--gutter);
   width: 100%;
 }
@@ -1838,7 +1797,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ptarif:not(.section--light) .ptarif__note { color: var(--os-70); }
 .ptarif:not(.section--light) .link-arrow { color: var(--os-70); }
 .ptarif:not(.section--light) .ocard { border-color: var(--os-15); }
-.ptarif:not(.section--light) .ocard__periode { color: var(--os-40); }
+.ptarif:not(.section--light) .ocard__periode { color: var(--os-doux); }
 
 @media (max-width: 760px) {
   .pgal__grid { grid-template-columns: 1fr; }
@@ -1891,9 +1850,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   flex: 1;
   padding: 10px 12px;
   border-radius: 2px;
-  transition: transform 0.3s var(--ease-out), filter 0.3s ease;
+  transition: filter 0.3s ease;
 }
-.tt__c:hover { transform: translateY(-2px); filter: brightness(0.96); }
+.tt__c:hover { filter: brightness(0.94); }
 .tt__top {
   display: flex;
   align-items: baseline;
@@ -1914,7 +1873,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.03em;
-  color: var(--noir-45);
+  color: var(--noir-doux);
 }
 .tt__nom {
   display: block;
@@ -1924,49 +1883,60 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   line-height: 1.25;
   color: var(--noir);
 }
-.tt__resa {
-  display: block;
-  margin-top: 4px;
-  font-size: 11.5px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--brique);
-}
 
 /* Familles : couleurs de marque à pleine saturation, jamais de lavis pastel.
-   Le texte bascule en crème ou en noir selon la valeur du fond. */
+   Le texte bascule en blanc ou en noir selon la valeur du fond. */
 .tt__c--cross { background: var(--noir); }
 .tt__c--renfo { background: var(--bordeaux); }
 .tt__c--cardio { background: var(--brique); }
 .tt__c--danse { background: var(--rouge); }
 .tt__c--kids { background: var(--corail); }
-.tt__c--douceur { background: #FFFDF9; box-shadow: inset 0 0 0 1px var(--noir-12); }
+.tt__c--douceur { background: #FFFFFF; box-shadow: inset 0 0 0 1px var(--noir-12); }
 
-/* Fonds sombres : texte crème */
+/* Fonds sombres : texte blanc, secondaire à 68 % (AA sur noir, bordeaux, brique) */
 .tt__c--cross .tt__nom,
 .tt__c--renfo .tt__nom,
 .tt__c--cardio .tt__nom { color: var(--os); }
 .tt__c--cross .tt__h,
 .tt__c--renfo .tt__h,
-.tt__c--cardio .tt__h { color: var(--os-70); }
+.tt__c--cardio .tt__h,
 .tt__c--cross .tt__cat,
 .tt__c--renfo .tt__cat,
-.tt__c--cardio .tt__cat,
-.tt__c--danse .tt__cat { color: var(--os-40); }
-.tt__c--kids .tt__cat,
-.tt__c--douceur .tt__cat { color: var(--noir-45); }
+.tt__c--cardio .tt__cat { color: var(--os-doux); }
+.tt__c--douceur .tt__cat { color: var(--noir-doux); }
+
+/* Rouge et corail : aucun texte transparent ne tient le contraste, texte plein */
+.tt__c--danse .tt__nom,
+.tt__c--danse .tt__h,
+.tt__c--danse .tt__cat { color: var(--os); }
+.tt__c--kids .tt__nom,
+.tt__c--kids .tt__h,
+.tt__c--kids .tt__cat { color: var(--noir); }
+
+/* Créneau sur réservation : mention sous le nom du cours, à pleine
+   intensité (le libellé de famille, lui, reste atténué) */
+.tt__resa {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rouge);
+}
 .tt__c--cross .tt__resa,
 .tt__c--renfo .tt__resa,
-.tt__c--cardio .tt__resa { color: rgba(242, 237, 228, 0.82); }
+.tt__c--cardio .tt__resa,
+.tt__c--danse .tt__resa { color: var(--os); }
+.tt__c--kids .tt__resa { color: var(--noir); }
 
-/* Fonds vifs : texte noir */
-.tt__c--kids .tt__nom { color: var(--noir); }
-.tt__c--danse .tt__nom { color: var(--os); }
-.tt__c--kids .tt__h { color: var(--noir-70); }
-.tt__c--danse .tt__h { color: var(--os-70); }
-.tt__c--kids .tt__resa { color: var(--noir-70); }
-.tt__c--danse .tt__resa { color: rgba(242, 237, 228, 0.82); }
+/* Grille entièrement sur réservation : dit une fois, pas dans chaque case */
+.tt-resa {
+  margin-bottom: 18px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--noir);
+}
 
 .tt-cards { display: none; }
 
@@ -1974,7 +1944,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .tt { display: none; }
   .tt-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
     gap: clamp(10px, 0.9vw, 16px);
   }
 }
@@ -2013,7 +1983,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* ============================================================
    ACCUEIL · conditions d'accès
    ============================================================ */
-.acces { padding: 0 0 clamp(80px, 10vw, 150px); }
+.acces { padding: clamp(60px, 7vw, 110px) 0 clamp(80px, 10vw, 150px); }
 .acces .section-title {
   font-size: clamp(36px, 5.6vw, 84px);
   margin-bottom: clamp(36px, 4.5vw, 70px);
@@ -2021,7 +1991,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .acces__list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: clamp(26px, 3.5vw, 60px);
 }
 .acces__item {
@@ -2031,14 +2001,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   padding-top: 22px;
   border-top: 1px solid var(--noir-12);
 }
-.acces__num {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  color: var(--terre);
-}
 .acces__item p {
   font-size: clamp(16px, 1.35vw, 19px);
   line-height: 1.6;
   color: var(--noir-70);
+}
+
+/* Les titres calibrés plus petits (accès) sont déclarés après le bloc
+   mobile : leur plancher de 36px y reprendrait le dessus et rognerait
+   « Réservation » à 320px de large. */
+@media (max-width: 760px) {
+  .acces .section-title,
+  .pacces .section-title { font-size: clamp(28px, calc((100vw - 2 * var(--pad)) / 8.8), 36px); }
 }

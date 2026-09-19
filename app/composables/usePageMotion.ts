@@ -1,10 +1,4 @@
-import {
-  initReveals,
-  initCounters,
-  initFooter,
-  fitFooterWordmark,
-  killAll,
-} from './useAnimations'
+import { initReveals, fitFooterWordmark, killAll } from './useAnimations'
 import { prefersReducedMotion, ScrollTrigger } from './useScroll'
 import { initMagnetic } from './useMagnetic'
 
@@ -30,8 +24,6 @@ export function usePageMotion(extra?: (reduced: boolean) => void) {
     await gate
 
     initReveals(reduced)
-    initCounters(reduced)
-    initFooter(reduced)
     fitFooterWordmark()
     extra?.(reduced)
 

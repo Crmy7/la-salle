@@ -34,7 +34,6 @@ export interface Cours {
 export interface Prestation {
   slug: string
   imgBw?: string
-  num: string
   nom: string
   meta: string
   img: string
@@ -47,7 +46,6 @@ export interface Prestation {
 export const PRESTATIONS: Prestation[] = [
   {
     slug: 'musculation',
-    num: '01',
     nom: 'Musculation',
     meta: 'Charges libres, cardio, machines guidées · dès 17 ans',
     img: '/assets/img/musculation.jpg',
@@ -63,7 +61,6 @@ export const PRESTATIONS: Prestation[] = [
   },
   {
     slug: 'cours-collectifs',
-    num: '02',
     nom: 'Cours collectifs',
     meta: 'Du pilâtes à la zumba, tous niveaux',
     img: '/assets/img/cross-training-site.jpg',
@@ -79,12 +76,10 @@ export const PRESTATIONS: Prestation[] = [
     cours: [
       {
         nom: 'Abdos Flash',
-        resa: true,
         desc: "Cours spécial renforcement de la ceinture abdominale, sans impact, avec un travail cardio d'intensité modérée. Ce cours vous aide en outre à conserver un bon maintien du dos et à éliminer les douleurs qui sont la cause des mauvaises postures.",
       },
       {
         nom: 'Abdos Fessiers',
-        resa: true,
         desc: 'Cours spécial permettant de renforcer les muscles de la ceinture abdominale et des fessiers.',
       },
       {
@@ -94,7 +89,6 @@ export const PRESTATIONS: Prestation[] = [
       },
       {
         nom: 'Baby Gym',
-        resa: true,
         age: 'De la marche à 3 ans',
         desc: "Gymnastique récréative favorisant la socialisation, l'autonomie et le développement des aptitudes motrices de base : équilibre, sauts. Présence d'un adulte indispensable. Le cours se déroule dans la salle des cours collectifs.",
       },
@@ -115,7 +109,6 @@ export const PRESTATIONS: Prestation[] = [
       },
       {
         nom: 'Full Body',
-        resa: true,
         desc: "Travail de l'ensemble des muscles, des articulations et du système cardio-respiratoire.",
       },
       {
@@ -130,7 +123,6 @@ export const PRESTATIONS: Prestation[] = [
       },
       {
         nom: 'Hiit',
-        resa: true,
         desc: 'Entraînement court et intense ponctué de phases de récupération réduites, permet de tonifier la silhouette rapidement.',
       },
       {
@@ -145,7 +137,6 @@ export const PRESTATIONS: Prestation[] = [
       },
       {
         nom: 'Step',
-        resa: true,
         desc: "Programme cardio-vasculaire avec l'utilisation d'une plateforme. Permet d'augmenter l'endurance, la coordination et permet de définir les membres inférieurs.",
       },
       {
@@ -155,7 +146,6 @@ export const PRESTATIONS: Prestation[] = [
       },
       {
         nom: 'Strong Nation',
-        resa: true,
         desc: 'Entraînement au poids du corps alternant renforcement musculaire et activités cardio sur le rythme de la musique.',
       },
       {
@@ -175,14 +165,12 @@ export const PRESTATIONS: Prestation[] = [
       },
       {
         nom: 'Zumba',
-        resa: true,
         desc: "Discipline sportive qui allie à la fois des mouvements chorégraphiques d'inspiration latine et des gestes toniques destinés à renforcer la musculature.",
       },
     ],
   },
   {
     slug: 'cross-training',
-    num: '03',
     nom: 'Cross Training',
     meta: 'Box dédiée, cours encadrés · sur réservation',
     img: '/assets/img/boxe-sombre.jpg',
@@ -245,7 +233,6 @@ export const PRESTATIONS: Prestation[] = [
   },
   {
     slug: 'squash',
-    num: '04',
     nom: 'Squash',
     meta: 'Sessions de 40 minutes · sur réservation',
     img: '/assets/img/squash.jpg',
@@ -262,7 +249,6 @@ export const PRESTATIONS: Prestation[] = [
   },
   {
     slug: 'kids',
-    num: '05',
     nom: 'Cours enfants / ados',
     meta: 'Baby gym, cross kids, cross teens · de la marche à 17 ans',
     img: '/assets/img/enfants.jpg',
@@ -278,7 +264,6 @@ export const PRESTATIONS: Prestation[] = [
     cours: [
       {
         nom: 'Baby Gym',
-        resa: true,
         age: 'De la marche à 3 ans',
         desc: "Gymnastique récréative favorisant la sociabilisation, l'autonomie et le développement des aptitudes motrices de base : équilibres, sauts. Présence d'un adulte indispensable.",
       },
@@ -384,17 +369,17 @@ export const PASS_SQUASH = {
 
 export const AUTRES_ABOS = [
   {
-    titre: 'Cross Kids / Teens',
-    periode: 'Abonnement 10 mois, septembre à juin',
-    lignes: ['25 € / mois · 1 cours par semaine', '40 € / mois · 2 cours par semaine'],
-  },
-  {
     titre: 'Baby Gym',
     periode: 'Septembre à juin, hors vacances scolaires',
     lignes: ['190 €'],
   },
   {
-    titre: 'Zumba Strong',
+    titre: 'Cross Kids / Teens',
+    periode: 'Abonnement 10 mois, septembre à juin',
+    lignes: ['25 € / mois · 1 cours par semaine', '40 € / mois · 2 cours par semaine'],
+  },
+  {
+    titre: 'Zumba / Strong Nation',
     periode: 'Septembre à juillet',
     lignes: ['260 €'],
   },
@@ -410,13 +395,18 @@ export interface Creneau {
   h: string
   nom: string
   type: 'cardio' | 'renfo' | 'douceur' | 'cross' | 'kids' | 'danse'
+  /** Cours à réserver depuis l'application adhérent */
+  resa?: boolean
 }
 
+/* Cours collectifs sur réservation : liste transmise par la salle. La
+   réservation suit le cours (Biking, Pilâtes, Yoga…), jamais le Full Body, le
+   Step, la Zumba, les abdos ni la Baby Gym. */
 export const PLANNING_COLLECTIFS: Record<string, Creneau[]> = {
   Lundi: [
-    { h: '9h00', nom: 'Yogalates', type: 'douceur' },
-    { h: '10h15', nom: 'Gym Ball', type: 'douceur' },
-    { h: '12h15', nom: 'Biking', type: 'cardio' },
+    { h: '9h00', nom: 'Yogalates', type: 'douceur', resa: true },
+    { h: '10h15', nom: 'Gym Ball', type: 'douceur', resa: true },
+    { h: '12h15', nom: 'Biking', type: 'cardio', resa: true },
     { h: '17h15', nom: 'Abdos Flash', type: 'renfo' },
     { h: '17h40', nom: 'Hiit', type: 'cardio' },
     { h: '18h15', nom: 'Step Inter', type: 'cardio' },
@@ -424,43 +414,43 @@ export const PLANNING_COLLECTIFS: Record<string, Creneau[]> = {
     { h: '20h15', nom: 'Strong Nation', type: 'danse' },
   ],
   Mardi: [
-    { h: '8h30', nom: 'Renfo Mobilité', type: 'renfo' },
+    { h: '8h30', nom: 'Renfo Mobilité', type: 'renfo', resa: true },
     { h: '9h30', nom: 'Full Body', type: 'renfo' },
-    { h: '10h30', nom: 'Gym Douce', type: 'douceur' },
+    { h: '10h30', nom: 'Gym Douce', type: 'douceur', resa: true },
     { h: '12h15', nom: 'Full Body', type: 'renfo' },
-    { h: '18h00', nom: 'Pilâtes', type: 'douceur' },
-    { h: '18h45', nom: 'Yoga', type: 'douceur' },
-    { h: '19h45', nom: 'Pilâtes', type: 'douceur' },
+    { h: '18h00', nom: 'Pilâtes', type: 'douceur', resa: true },
+    { h: '18h45', nom: 'Yoga', type: 'douceur', resa: true },
+    { h: '19h45', nom: 'Pilâtes', type: 'douceur', resa: true },
   ],
   Mercredi: [
     { h: '9h15', nom: 'Baby Gym', type: 'kids' },
     { h: '10h00', nom: 'Baby Gym', type: 'kids' },
-    { h: '11h15', nom: 'Pilâtes', type: 'douceur' },
-    { h: '12h15', nom: 'Yin Yoga', type: 'douceur' },
-    { h: '17h00', nom: 'Cardio Training', type: 'cardio' },
-    { h: '18h00', nom: 'Biking', type: 'cardio' },
-    { h: '19h00', nom: 'Biking', type: 'cardio' },
+    { h: '11h15', nom: 'Pilâtes', type: 'douceur', resa: true },
+    { h: '12h15', nom: 'Yin Yoga', type: 'douceur', resa: true },
+    { h: '17h00', nom: 'Cardio Training', type: 'cardio', resa: true },
+    { h: '18h00', nom: 'Biking', type: 'cardio', resa: true },
+    { h: '19h00', nom: 'Biking', type: 'cardio', resa: true },
     { h: '20h00', nom: 'Zumba', type: 'danse' },
   ],
   Jeudi: [
-    { h: '8h30', nom: 'Renfo Mobilité', type: 'renfo' },
+    { h: '8h30', nom: 'Renfo Mobilité', type: 'renfo', resa: true },
     { h: '9h30', nom: 'Full Body', type: 'renfo' },
-    { h: '10h30', nom: 'Stretching Mobilité', type: 'douceur' },
+    { h: '10h30', nom: 'Stretching Mobilité', type: 'douceur', resa: true },
     { h: '12h15', nom: 'Step Débutant', type: 'cardio' },
     { h: '17h30', nom: 'Abdos Fessiers', type: 'renfo' },
     { h: '18h00', nom: 'Step Inter', type: 'cardio' },
     { h: '19h00', nom: 'Full Body', type: 'renfo' },
-    { h: '19h45', nom: 'Stretching Mobilité', type: 'douceur' },
+    { h: '19h45', nom: 'Stretching Mobilité', type: 'douceur', resa: true },
   ],
   Vendredi: [
-    { h: '8h30', nom: 'Animal Flow', type: 'renfo' },
-    { h: '9h45', nom: 'Biking', type: 'cardio' },
-    { h: '11h15', nom: 'Gym Ball', type: 'douceur' },
-    { h: '12h15', nom: 'Pilâtes', type: 'douceur' },
-    { h: '14h00', nom: 'Yoga', type: 'douceur' },
-    { h: '17h30', nom: 'Core Training', type: 'renfo' },
-    { h: '18h00', nom: 'Cardio Training', type: 'cardio' },
-    { h: '19h00', nom: 'Renfo Mobilité', type: 'renfo' },
+    { h: '8h30', nom: 'Animal Flow', type: 'renfo', resa: true },
+    { h: '9h45', nom: 'Biking', type: 'cardio', resa: true },
+    { h: '11h15', nom: 'Gym Ball', type: 'douceur', resa: true },
+    { h: '12h15', nom: 'Pilâtes', type: 'douceur', resa: true },
+    { h: '14h00', nom: 'Yoga', type: 'douceur', resa: true },
+    { h: '17h30', nom: 'Core Training', type: 'renfo', resa: true },
+    { h: '18h00', nom: 'Cardio Training', type: 'cardio', resa: true },
+    { h: '19h00', nom: 'Renfo Mobilité', type: 'renfo', resa: true },
   ],
   Samedi: [
     { h: '9h15', nom: 'Full Body', type: 'renfo' },
@@ -468,82 +458,80 @@ export const PLANNING_COLLECTIFS: Record<string, Creneau[]> = {
   ],
 }
 
+/* Cross Training : tous les cours sont sur réservation */
 export const PLANNING_CROSS: Record<string, Creneau[]> = {
   Lundi: [
-    { h: '9h15', nom: 'Cross Training', type: 'cross' },
-    { h: '12h15', nom: 'Cross Training', type: 'cross' },
-    { h: '17h00', nom: 'Gym', type: 'cross' },
-    { h: '18h00', nom: 'Cross Training', type: 'cross' },
-    { h: '19h00', nom: 'Haltéro', type: 'renfo' },
-    { h: '20h00', nom: 'Cross Training', type: 'cross' },
+    { h: '9h15', nom: 'Cross Training', type: 'cross', resa: true },
+    { h: '12h15', nom: 'Cross Training', type: 'cross', resa: true },
+    { h: '17h00', nom: 'Gym', type: 'cross', resa: true },
+    { h: '18h00', nom: 'Cross Training', type: 'cross', resa: true },
+    { h: '19h00', nom: 'Haltéro', type: 'renfo', resa: true },
+    { h: '20h00', nom: 'Cross Training', type: 'cross', resa: true },
   ],
   Mardi: [
-    { h: '12h15', nom: 'Cross Training', type: 'cross' },
-    { h: '17h00', nom: 'Functional Training', type: 'cross' },
-    { h: '18h00', nom: 'TRX', type: 'renfo' },
-    { h: '19h00', nom: 'Cross Training', type: 'cross' },
-    { h: '20h00', nom: 'Cross Training', type: 'cross' },
+    { h: '12h15', nom: 'Cross Training', type: 'cross', resa: true },
+    { h: '17h00', nom: 'Functional Training', type: 'cross', resa: true },
+    { h: '18h00', nom: 'TRX', type: 'renfo', resa: true },
+    { h: '19h00', nom: 'Cross Training', type: 'cross', resa: true },
+    { h: '20h00', nom: 'Cross Training', type: 'cross', resa: true },
   ],
   Mercredi: [
-    { h: '10h00', nom: 'Cross Mini Kids', type: 'kids' },
-    { h: '11h00', nom: 'Cross Kids', type: 'kids' },
-    { h: '12h15', nom: 'Cross Training', type: 'cross' },
-    { h: '16h00', nom: 'Cross Mini Teens', type: 'kids' },
-    { h: '17h00', nom: 'Cross Teens', type: 'kids' },
-    { h: '18h00', nom: 'Cross Training', type: 'cross' },
-    { h: '19h00', nom: 'Gym', type: 'cross' },
-    { h: '20h00', nom: 'Cross Training', type: 'cross' },
+    { h: '10h00', nom: 'Cross Mini Kids', type: 'kids', resa: true },
+    { h: '11h00', nom: 'Cross Kids', type: 'kids', resa: true },
+    { h: '12h15', nom: 'Cross Training', type: 'cross', resa: true },
+    { h: '16h00', nom: 'Cross Mini Teens', type: 'kids', resa: true },
+    { h: '17h00', nom: 'Cross Teens', type: 'kids', resa: true },
+    { h: '18h00', nom: 'Cross Training', type: 'cross', resa: true },
+    { h: '19h00', nom: 'Gym', type: 'cross', resa: true },
+    { h: '20h00', nom: 'Cross Training', type: 'cross', resa: true },
   ],
   Jeudi: [
-    { h: '12h15', nom: 'TRX', type: 'renfo' },
-    { h: '17h00', nom: 'Mobilité', type: 'douceur' },
-    { h: '18h00', nom: 'Haltéro', type: 'renfo' },
-    { h: '19h00', nom: 'Cardio Training', type: 'cardio' },
-    { h: '20h00', nom: 'Cardio Training', type: 'cardio' },
+    { h: '12h15', nom: 'TRX', type: 'renfo', resa: true },
+    { h: '17h00', nom: 'Mobilité', type: 'douceur', resa: true },
+    { h: '18h00', nom: 'Haltéro', type: 'renfo', resa: true },
+    { h: '19h00', nom: 'Cardio Training', type: 'cardio', resa: true },
+    { h: '20h00', nom: 'Cardio Training', type: 'cardio', resa: true },
   ],
   Vendredi: [
-    { h: '9h15', nom: 'Cross Training', type: 'cross' },
-    { h: '12h15', nom: 'Cross Training', type: 'cross' },
-    { h: '17h00', nom: 'Functional Training', type: 'cross' },
-    { h: '18h00', nom: 'Cross Training', type: 'cross' },
-    { h: '19h00', nom: 'Cross Training', type: 'cross' },
-    { h: '20h00', nom: 'Core Training', type: 'renfo' },
+    { h: '9h15', nom: 'Cross Training', type: 'cross', resa: true },
+    { h: '12h15', nom: 'Cross Training', type: 'cross', resa: true },
+    { h: '17h00', nom: 'Functional Training', type: 'cross', resa: true },
+    { h: '18h00', nom: 'Cross Training', type: 'cross', resa: true },
+    { h: '19h00', nom: 'Cross Training', type: 'cross', resa: true },
+    { h: '20h00', nom: 'Core Training', type: 'renfo', resa: true },
   ],
   Samedi: [
-    { h: '9h00', nom: 'Cross Kids', type: 'kids' },
-    { h: '10h00', nom: 'Cross Mini Teens', type: 'kids' },
-    { h: '11h00', nom: 'Cross Teens', type: 'kids' },
-    { h: '12h15', nom: 'Team WOD', type: 'cross' },
+    { h: '9h00', nom: 'Cross Kids', type: 'kids', resa: true },
+    { h: '10h00', nom: 'Cross Mini Teens', type: 'kids', resa: true },
+    { h: '11h00', nom: 'Cross Teens', type: 'kids', resa: true },
+    { h: '12h15', nom: 'Team WOD', type: 'cross', resa: true },
   ],
 }
 
 /* Aperçu affiché sur l'accueil */
 export const COURS_APERCU = [
-  { nom: 'Hiit', type: 'Cardio', resa: true },
+  { nom: 'Hiit', type: 'Cardio', resa: false },
   { nom: 'Biking', type: 'Cardio', resa: true },
   { nom: 'Cross Training', type: 'Cross Training', resa: true },
   { nom: 'Pilâtes', type: 'Gym douce', resa: true },
   { nom: 'Team WOD', type: 'Cross Training', resa: true },
-  { nom: 'Zumba', type: 'Zumba', resa: true },
+  { nom: 'Zumba', type: 'Zumba', resa: false },
   { nom: 'TRX', type: 'Renforcement', resa: true },
   { nom: 'Stretching / Mobilité', type: 'Gym douce', resa: true },
 ]
 
 export const FORMULES = [
   {
-    num: '01',
     nom: 'Fitness\nMusculation',
     desc: "Le plateau de musculation en accès libre de 5h00 à 23h00, et l'ensemble des cours collectifs.",
     premium: false,
   },
   {
-    num: '02',
     nom: 'Cross\nTraining',
     desc: 'Tous les cours de Cross Training adulte, et la box en accès libre en dehors des cours.',
     premium: false,
   },
   {
-    num: '03',
     nom: 'Premium',
     desc: 'Toute la salle. Musculation, cours collectifs et Cross Training réunis dans une seule formule.',
     premium: true,
@@ -588,7 +576,7 @@ export const DETAILS: Record<string, DetailPrestation> = {
           "Un espace de charges libres pour le travail à la barre et aux haltères, un espace cardio et abdos, et des machines guidées pour apprendre les mouvements en sécurité ou isoler un groupe musculaire.",
       },
       {
-        titre: "Vous n'êtes pas laissé seul devant la machine",
+        titre: 'Un programme personnalisé',
         texte:
           "Suivant le type d'abonnement choisi, nos éducateurs sportifs établissent avec vous un programme personnalisé, corrigent vos placements et adaptent les charges au fil des semaines.",
       },
@@ -612,9 +600,9 @@ export const DETAILS: Record<string, DetailPrestation> = {
   'cross-training': {
     sections: [
       {
-        titre: 'Une box dédiée, pas un coin de salle',
+        titre: 'Une box dédiée au cross training',
         texte:
-          "L'espace de Cross Training est un espace à part entière. En dehors des créneaux encadrés, la box reste accessible en accès libre aux abonnés Cross Training et Premium.",
+          "La box est un espace à part entière. En dehors des créneaux encadrés, elle reste en accès libre pour les abonnés Cross Training et Premium.",
       },
       {
         titre: 'Des séances encadrées du début à la fin',
@@ -636,7 +624,7 @@ export const DETAILS: Record<string, DetailPrestation> = {
       {
         titre: 'De nombreuses disciplines au planning',
         texte:
-          "Du cardio pur au travail de mobilité, en passant par le renforcement et la danse. Chaque cours a son intensité et son objectif propres : il y a de quoi construire une semaine complète sans jamais répéter la même séance.",
+          "Du cardio au travail de mobilité, en passant par le renforcement et la danse. Chaque cours a son intensité et son objectif propres.",
       },
       {
         titre: 'Tous les niveaux dans la même salle',
@@ -661,7 +649,7 @@ export const DETAILS: Record<string, DetailPrestation> = {
       {
         titre: 'Des sessions de 40 minutes',
         texte:
-          "Le court se réserve par créneau de 40 minutes. C'est le format qui permet d'enchaîner les échanges sans temps mort, et de libérer le court pour les suivants.",
+          "Le court se réserve par créneau de 40 minutes, à l'accueil ou par téléphone.",
       },
       {
         titre: "Ce qu'il faut prévoir",
@@ -669,7 +657,7 @@ export const DETAILS: Record<string, DetailPrestation> = {
           "Les balles sont prêtées sur place et une raquette se loue 2 €. Chaussures à semelles blanches obligatoires.",
       },
     ],
-    galerie: [{ img: '/assets/img/squash-court.svg', alt: 'Schéma du court de squash' }],
+    galerie: [{ img: '/assets/img/squash.jpg', alt: 'Deux raquettes et une balle sur le court de squash de La Salle' }],
     acces: {
       titre: 'Uniquement sur réservation',
       lignes: [
@@ -728,8 +716,6 @@ export function creneauxPrestation(cfg: DetailPrestation['planning']) {
   return out
 }
 
-/** Tous les cours sont sur réservation, sans exception. */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function surReservation(_c: Creneau) {
-  return true
-}
+/* La réservation se lit sur chaque créneau (`resa`). Quand tous les cours d'une
+   grille ou d'une liste sont sur réservation, c'est dit une fois, pas dans
+   chaque case. */

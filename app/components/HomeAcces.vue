@@ -3,8 +3,7 @@
     <div class="container">
       <h2 class="section-title" data-title-reveal>Une offre accessible<br >et adaptée à tous</h2>
       <ul class="acces__list">
-        <li v-for="(l, i) in regles" :key="i" class="acces__item" data-reveal-up>
-          <span class="acces__num">{{ String(i + 1).padStart(2, '0') }}</span>
+        <li v-for="l in regles" :key="l" class="acces__item" data-reveal-up>
           <p>{{ l }}</p>
         </li>
       </ul>

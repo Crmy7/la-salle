@@ -23,12 +23,12 @@
           </button>
         </div>
 
-        <PlanningGrid :key="actif" :grille="grille" :legende="`Planning ${actif}`" />
+        <PlanningGrid :key="actif" :grille="grille" :legende="`Planning ${actif}`" niveau-jour="h2" />
 
         <p class="planning-page__note">
-          Planning susceptible d'évoluer d'une saison à l'autre. Les cours collectifs et
-          de Cross Training sont sur réservation, depuis l'application adhérent de La Salle.
-          Les cours enfants et ados se prennent à l'année.
+          Planning susceptible d'évoluer d'une saison à l'autre. Les cours marqués « sur
+          réservation » se réservent depuis l'application adhérent de La Salle. Les cours enfants
+          et ados se prennent à l'année.
         </p>
       </div>
     </section>

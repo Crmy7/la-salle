@@ -5,13 +5,12 @@
       <div class="tarifs__grid">
         <NuxtLink
           v-for="f in FORMULES"
-          :key="f.num"
+          :key="f.nom"
           to="/tarifs"
           class="tcard"
           :class="{ 'tcard--premium': f.premium }"
           data-tcard
         >
-          <span class="tcard__num">{{ f.num }}</span>
           <h3 class="tcard__name" v-html="f.nom.replace('\n', '<br>')" />
           <p class="tcard__desc">{{ f.desc }}</p>
           <span class="tcard__cta">Voir le tarif <span aria-hidden="true">→</span></span>

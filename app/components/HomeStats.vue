@@ -1,21 +1,17 @@
 <template>
   <section class="stats section--light">
-    <div class="container">
-      <ul class="stats__grid">
-        <li v-for="s in stats" :key="s.label" class="stats__item">
-          <span class="stats__value"><span :data-counter="s.value">0</span>{{ s.suffix }}</span>
-          <span class="stats__label">{{ s.label }}</span>
-        </li>
-      </ul>
+    <div class="container stats__inner">
+      <p class="stats__lead" data-reveal-lines>Accès libre de 5h00 à 23h00, 7 jours sur 7.</p>
+      <div data-reveal-up>
+        <h2 class="stats__label">Horaires de l'accueil</h2>
+        <ul class="stats__hours">
+          <li v-for="h in SALLE.accueil" :key="h">{{ h }}</li>
+        </ul>
+      </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-const stats = [
-  { value: 5, suffix: 'h00', label: 'Première ouverture des portes, chaque matin' },
-  { value: 23, suffix: 'h00', label: 'Dernières séries, chaque soir' },
-  { value: 7, suffix: 'j/7', label: "Accès libre, toute l'année" },
-  { value: 40, suffix: '+', label: 'Cours collectifs et cross chaque semaine' },
-]
+import { SALLE } from '~/composables/useSiteData'
 </script>

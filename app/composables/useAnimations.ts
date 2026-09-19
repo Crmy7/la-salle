@@ -1,4 +1,4 @@
-import { gsap, ScrollTrigger, SplitText, getLenis } from './useScroll'
+import { gsap, ScrollTrigger, SplitText } from './useScroll'
 
 /* Tout ce qui survit à un démontage de page (écouteurs window, callbacks du
    ticker GSAP, instances SplitText) doit être enregistré ici, sinon chaque
@@ -86,58 +86,8 @@ export function heroIntro(reduced: boolean) {
   })
   gsap.to('.hero__content', {
     yPercent: -8,
-    opacity: 0.25,
     ease: 'none',
     scrollTrigger: { trigger: '[data-hero]', start: '40% top', end: 'bottom top', scrub: true },
-  })
-}
-
-/* ============================================================
-   MARQUEE
-   ============================================================ */
-export function initMarquee(reduced: boolean) {
-  const track = document.querySelector('[data-marquee]') as HTMLElement
-  if (!track) return
-
-  const group = track.querySelector('.band__group') as HTMLElement
-  const ensureWidth = () => {
-    while (track.scrollWidth < window.innerWidth + (track.children[0] as HTMLElement).offsetWidth) {
-      track.appendChild(group.cloneNode(true))
-    }
-  }
-  ensureWidth()
-  if (reduced) return
-
-  let tween: gsap.core.Tween | null = null
-  const build = () => {
-    ensureWidth()
-    const w = (track.children[0] as HTMLElement).offsetWidth
-    tween?.kill()
-    gsap.set(track, { x: 0 })
-    tween = gsap.to(track, { x: -w, duration: w / 80, ease: 'none', repeat: -1 })
-  }
-  build()
-
-  let resizeTimer: ReturnType<typeof setTimeout>
-  const onResize = () => {
-    clearTimeout(resizeTimer)
-    resizeTimer = setTimeout(build, 250)
-  }
-  window.addEventListener('resize', onResize)
-
-  const onTick = () => {
-    if (!tween) return
-    const v = Math.abs(getLenis()?.velocity ?? 0)
-    const target = gsap.utils.clamp(1, 3.4, 1 + v * 0.045)
-    tween.timeScale(gsap.utils.interpolate(tween.timeScale(), target, 0.12))
-  }
-  gsap.ticker.add(onTick)
-
-  onDispose(() => {
-    window.removeEventListener('resize', onResize)
-    clearTimeout(resizeTimer)
-    gsap.ticker.remove(onTick)
-    tween?.kill()
   })
 }
 
@@ -160,33 +110,19 @@ export function initReveals(reduced: boolean) {
     })
   })
 
+  /* Aucune révélation ne joue sur l'opacité : le texte reste à plein
+     contraste à chaque instant, c'est le masque qui le cache. */
   document.querySelectorAll('[data-reveal-lines]').forEach((el) => {
     const split = new SplitText(el, { type: 'lines', mask: 'lines' })
     onDispose(() => split.revert())
-    gsap.set(split.lines, { yPercent: 110, opacity: 0 })
+    gsap.set(split.lines, { yPercent: 110 })
     gsap.to(split.lines, {
       yPercent: 0,
-      opacity: 1,
       duration: 0.9,
       stagger: 0.07,
       ease: 'power3.out',
       scrollTrigger: { trigger: el, start: 'top 88%', once: true },
     })
-  })
-
-  document.querySelectorAll('[data-words-scrub]').forEach((el) => {
-    const split = new SplitText(el, { type: 'words', wordsClass: 'w' })
-    onDispose(() => split.revert())
-    gsap.fromTo(
-      split.words,
-      { opacity: 0.12 },
-      {
-        opacity: 1,
-        stagger: 0.06,
-        ease: 'none',
-        scrollTrigger: { trigger: el, start: 'top 82%', end: 'bottom 45%', scrub: 0.6 },
-      }
-    )
   })
 
   document.querySelectorAll('[data-mask]').forEach((el) => {
@@ -215,40 +151,22 @@ export function initReveals(reduced: boolean) {
     ...document.querySelectorAll('[data-tcard]'),
     ...document.querySelectorAll('[data-reveal-up]'),
   ]
+  /* Le bloc monte et se découvre du haut vers le bas. Le clip ne coupe
+     que verticalement (un tableau qui déborde à l'écran reste entier) et
+     il est retiré à la fin pour ne rien rogner (focus, survols). */
   rows.forEach((row) => {
     gsap.fromTo(
       row,
-      { opacity: 0, y: 44 },
+      { y: 44, clipPath: 'inset(0% -50vw 100% -50vw)' },
       {
-        opacity: 1,
         y: 0,
+        clipPath: 'inset(0% -50vw 0% -50vw)',
         duration: 0.85,
         ease: 'power3.out',
+        clearProps: 'clipPath',
         scrollTrigger: { trigger: row, start: 'top 92%', once: true },
       }
     )
-  })
-}
-
-/* ============================================================
-   COMPTEURS
-   ============================================================ */
-export function initCounters(reduced: boolean) {
-  document.querySelectorAll('[data-counter]').forEach((el) => {
-    const target = parseInt((el as HTMLElement).dataset.counter || '0', 10)
-    if (reduced) {
-      el.textContent = String(target)
-      return
-    }
-    const obj = { v: 0 }
-    gsap.to(obj, {
-      v: target,
-      duration: 1.6,
-      ease: 'power2.out',
-      snap: { v: 1 },
-      onUpdate: () => (el.textContent = String(Math.round(obj.v))),
-      scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-    })
   })
 }
 
@@ -309,18 +227,17 @@ export function initPrestations(reduced: boolean) {
         const [tx, ty] = cible(lastX, lastY)
         xTo(tx, tx)
         yTo(ty, ty)
-        gsap.to(preview, { autoAlpha: 1, scale: 1, duration: 0.45, ease: 'power3.out' })
+        gsap.to(preview, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' })
       }
-      gsap.fromTo(previewImg, { scale: 1.18 }, { scale: 1, duration: 0.7, ease: 'power3.out' })
     })
   })
 
   list.addEventListener('mouseleave', () => {
     visible = false
-    gsap.to(preview, { autoAlpha: 0, scale: 0.92, duration: 0.35, ease: 'power3.in' })
+    gsap.to(preview, { autoAlpha: 0, duration: 0.25, ease: 'power2.in' })
   })
 
-  gsap.set(preview, { autoAlpha: 0, scale: 0.92 })
+  gsap.set(preview, { autoAlpha: 0 })
 }
 
 /* ============================================================
@@ -353,23 +270,8 @@ export function initGallery(reduced: boolean) {
 }
 
 /* ============================================================
-   FOOTER
+   FOOTER : le mot « LA SALLE » occupe toute la largeur
    ============================================================ */
-export function initFooter(reduced: boolean) {
-  const mark = document.querySelector('[data-footer-wordmark]')
-  if (!mark || reduced) return
-
-  gsap.fromTo(
-    mark,
-    { backgroundPosition: '100% 0' },
-    {
-      backgroundPosition: '0% 0',
-      ease: 'none',
-      scrollTrigger: { trigger: '.footer', start: 'top bottom', end: 'bottom bottom', scrub: 0.5 },
-    }
-  )
-}
-
 export function fitFooterWordmark() {
   const mark = document.querySelector('[data-footer-wordmark]') as HTMLElement
   if (!mark) return

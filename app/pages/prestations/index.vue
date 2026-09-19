@@ -26,8 +26,6 @@
               <span class="ptile__veil" />
             </span>
 
-            <span class="ptile__num">{{ p.num }}</span>
-
             <span class="ptile__foot">
               <span class="ptile__name">{{ p.nom }}</span>
               <span class="ptile__meta">{{ p.meta }}</span>

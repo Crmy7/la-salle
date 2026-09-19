@@ -1,7 +1,6 @@
 <template>
   <main class="page">
     <HomeHero />
-    <HomeBand />
     <HomeManifesto />
     <HomeStats />
     <HomeAcces />
@@ -23,7 +22,6 @@
 import {
   setHeroInitial,
   heroIntro,
-  initMarquee,
   initPrestations,
   initGallery,
 } from '~/composables/useAnimations'
@@ -36,7 +34,6 @@ if (import.meta.client && !prefersReducedMotion()) {
 
 usePageMotion((reduced) => {
   heroIntro(reduced)
-  initMarquee(reduced)
   initPrestations(reduced)
   initGallery(reduced)
 })

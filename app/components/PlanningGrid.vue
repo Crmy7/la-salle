@@ -1,5 +1,9 @@
 <template>
   <div class="tt-wrap">
+    <!-- Grille entièrement sur réservation : dit une fois, pas dans chaque case.
+         Sinon, chaque créneau concerné porte la mention. -->
+    <p v-if="toutResa" class="tt-resa">Tous les cours sont sur réservation.</p>
+
     <!-- Grille alignée. Une ligne regroupe les cours d'une même plage horaire,
          chaque case portant son heure exacte : c'est ce qui rend la grille
          dense et lisible plutôt qu'une échelle de lignes presque vides. -->
@@ -27,7 +31,7 @@
               <span class="tt__cat">{{ LABELS[c.type] }}</span>
             </span>
             <span class="tt__nom">{{ c.nom }}</span>
-            <span v-if="surReservation(c)" class="tt__resa">Réservation</span>
+            <span v-if="c.resa && !toutResa" class="tt__resa">Sur réservation</span>
           </span>
         </div>
       </div>
@@ -36,7 +40,8 @@
     <!-- Sous 1000px la grille ne tient pas : cartes par jour -->
     <div class="tt-cards">
       <div v-for="j in JOURS" :key="j" class="pday">
-        <h3 class="pday__name">{{ j }}</h3>
+        <component :is="niveauJour" class="pday__name">{{ j }}</component>
+        <p v-if="!toutResa && jourToutResa(j)" class="pday__resa">Tous les cours sur réservation</p>
         <ul v-if="grille[j]?.length" class="pday__list">
           <li v-for="c in grille[j]" :key="c.h + c.nom" class="pslot" :class="`pslot--${c.type}`">
             <span class="pslot__top">
@@ -44,7 +49,9 @@
               <span class="pslot__cat">{{ LABELS[c.type] }}</span>
             </span>
             <span class="pslot__nom">{{ c.nom }}</span>
-            <span v-if="surReservation(c)" class="pslot__resa">Sur réservation</span>
+            <span v-if="c.resa && !toutResa && !jourToutResa(j)" class="pslot__resa">
+              Sur réservation
+            </span>
           </li>
         </ul>
         <p v-else class="pday__empty">Pas de cours</p>
@@ -54,14 +61,29 @@
 </template>
 
 <script setup lang="ts">
-import { JOURS, surReservation, type Creneau } from '~/composables/useSiteData'
+import { JOURS, type Creneau } from '~/composables/useSiteData'
 
 const props = defineProps<{
   grille: Record<string, Creneau[]>
   legende?: string
+  /** Niveau des titres de jour : h2 quand aucun titre de section ne précède la grille */
+  niveauJour?: 'h2' | 'h3'
 }>()
 
 const legende = computed(() => props.legende ?? 'Planning des cours')
+
+/* Mention de réservation : une fois pour la grille quand tout est sur
+   réservation, une fois par jour (cartes mobiles) quand toute la journée
+   l'est, sinon sur chaque créneau concerné. */
+const toutResa = computed(() => {
+  const tous = JOURS.flatMap((j) => props.grille[j] ?? [])
+  return tous.length > 0 && tous.every((c) => c.resa)
+})
+const jourToutResa = (j: string) => {
+  const cours = props.grille[j] ?? []
+  return cours.length > 1 && cours.every((c) => c.resa)
+}
+const niveauJour = computed(() => props.niveauJour ?? 'h3')
 
 /* Un tri de chaînes placerait 9h15 après 12h15. */
 const enMinutes = (h: string) => {

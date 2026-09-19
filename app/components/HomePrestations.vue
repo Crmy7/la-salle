@@ -6,7 +6,6 @@
     <ul class="plist" data-plist>
       <li v-for="p in PRESTATIONS" :key="p.slug" class="plist__item" data-plist-item :data-img="p.img">
         <NuxtLink :to="`/prestations/${p.slug}`" class="plist__row">
-          <span class="plist__num">{{ p.num }}</span>
           <span class="plist__name">{{ p.nom }}</span>
           <span class="plist__meta">{{ p.meta }}</span>
           <span class="plist__arrow" aria-hidden="true">→</span>

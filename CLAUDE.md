@@ -15,21 +15,22 @@ Refonte du site de La Salle, salle de sport à La Roche-sur-Foron (lasalle-gym.c
 - `app/components/` : Site* (header, menu, footer, preloader) et Home* (une par section)
 - `app/composables/`
   - `useScroll.ts` : enregistrement GSAP, Lenis, prefersReducedMotion
-  - `useAnimations.ts` : preloader, hero, marquee, reveals, compteurs, galerie, footer
+  - `useAnimations.ts` : preloader, hero, révélations, aperçu des prestations, galerie, mot du footer
   - `useMagnetic.ts` : boutons magnétiques motion.dev
   - `useMenu.ts` : état du menu overlay (useState)
   - `useOpeningStatus.ts` : statut ouvert/fermé calculé sur 5h-23h
   - `useSiteData.ts` : contenus réels du club (source unique)
 - `app/assets/css/style.css` : design system complet (tokens en `:root`)
 - `app/plugins/scroll.client.ts` : init GSAP + Lenis côté client
-- `public/assets/img/` : photos, logo, tuile SVG squash
+- `public/assets/img/` : photos (couleur, et noir et blanc cuit dans `bw/`), logo
 
 ## Règles client (à respecter partout)
 - Palette : rouge principal **#DD0026**, puis #600C1C #842B1D #D53B27 #E56140 #231F20
-  (fond chaud #171314, clair #F2EDE4)
-- #DD0026 est un ton médian : son contraste est insuffisant avec le noir (3,60) comme
-  avec le crème (4,39). Sur fond rouge, le texte est donc **toujours en crème**, et les
-  survols basculent sur #842B1D (brique) et non sur le corail, trop clair.
+  (fond chaud #171314, clair **#FFFFFF**). Le crème #F2EDE4 a été retiré : la palette
+  crème / beige figure dans les clichés « IA » du catalogue impeccable.style.
+- #DD0026 est un ton médian : le noir n'y atteint que 3,60:1. Sur fond rouge, le texte
+  est donc **toujours blanc** (5,1:1), survols compris, et les survols de boutons rouges
+  basculent sur #842B1D (brique) et non sur le corail, trop clair.
 - INTERDIT : tirets cadratins, labels "eyebrow", `border-left`, typo monospace,
   grain/bruit en overlay, chips/badges bordés, clichés fitness, rendu "IA générique"
 - Tailles de texte maîtrisées, aucun élément qui dépasse du viewport
@@ -61,8 +62,12 @@ Refonte du site de La Salle, salle de sport à La Roche-sur-Foron (lasalle-gym.c
 ## Source des données
 Tout est dans `useSiteData.ts`. Les tarifs, les plannings et les descriptions de cours
 viennent de la **brochure officielle de septembre 2026** : ne pas les modifier sans la
-source. Tous les cours collectifs et de Cross Training sont sur réservation, y compris
-ceux que la brochure ne marque pas entre parenthèses (consigne client).
+source. Réservation (consigne client du 19/09/2026) : tous les cours de Cross Training,
+et pour les cours collectifs la liste transmise par la salle, portée par le champ `resa`
+de chaque créneau. Elle suit le cours : Yogalates, Gym Ball, Biking, Renfo Mobilité,
+Gym Douce, Pilâtes, Yoga, Yin Yoga, Cardio Training, Stretching Mobilité, Animal Flow,
+Core Training. Jamais le Full Body, le Step, la Zumba, Strong Nation, les abdos, le Hiit
+ni la Baby Gym.
 Le blog n'a aucun article réel côté client — la page affiche la seule information
 réelle disponible (horaires d'été) et renvoie vers Instagram.
 
@@ -116,10 +121,9 @@ Le site est passé de 26 à ~110 fps au scroll. Quatre règles en découlent :
    parallaxe force une re-rastérisation à chaque frame.
 2. **Aucun `backdrop-filter`.** Très coûteux sur une surface repeinte au scroll.
    Utiliser un rgba opaque à la place.
-3. **`will-change` réservé aux éléments animés en continu** (`.band__track`,
-   `.gallery__track`). Sur un simple survol il crée une couche permanente inutile.
-4. **Dégradés sobres sur les grands blocs.** `.dark-run` fait plus de 1700px :
-   2 foyers et 6 arrêts, pas plus.
+3. **`will-change` réservé aux éléments animés en continu** (`.gallery__track`). Sur un simple survol il crée une couche permanente inutile.
+4. **Pas de dégradé sur les grands blocs.** `.dark-run` (plus de 1700px) est un aplat
+   noir : les halos radiaux sont un cliché IA et coûtent au défilement.
 
 5. **Tout conteneur `[data-mask]` doit être `overflow: hidden`.** L'image y attend
    son animation en `scale(1.25)` : sans clipping de mise en page elle élargit le
@@ -132,3 +136,32 @@ Tout écouteur `window` ou callback `gsap.ticker` posé dans `useAnimations.ts` 
 ## Dev
 `npm run dev` (port 3000) · `npm run build` · `npm run generate` (statique)
 Audit visuel : scripts Playwright dans le scratchpad (playwright global + chromium installés)
+
+## Zéro « AI slop » (catalogue impeccable.style)
+Objectif tenu : **0 constat** du détecteur, sur les sources et sur les 11 pages en
+1280, 1440, 768, 390 et 320px, côté Nuxt comme côté WordPress.
+- `npx -y impeccable@4.1.0 detect app/` puis, serveur lancé,
+  `npx -y impeccable@4.1.0 detect http://localhost:3000/<page> --viewport 390x844`
+  (le détecteur échantillonne la page environ 1 s après le chargement, rideau levé).
+- Retirés, à ne pas réintroduire : bandeau défilant, compteurs et grille de chiffres
+  (remplacés par la phrase d'accès libre et les horaires de l'accueil), numéros
+  « 01 02 03 » devant les titres, point qui pulse, indication « Défiler », zoom des
+  images au survol, texte qui s'allume mot à mot au défilement, texte en dégradé.
+- **Aucune révélation ne joue sur l'opacité** : les lignes montent derrière un masque,
+  les blocs se découvrent par un `clip-path` vertical retiré en fin d'animation. Le
+  texte est à plein contraste à chaque instant.
+- Ressorts motion.dev en amortissement critique (pas de rebond).
+- La mention « sur réservation » : une fois au-dessus d'une grille ou d'une liste quand
+  tout y est sur réservation (Cross Training), une fois sous le nom du jour quand toute
+  la journée l'est (cartes mobiles), sinon sur chaque créneau concerné.
+- Capitales réservées aux titres et libellés courts (moins de 30 caractères) : les
+  phrases sont en casse normale.
+- Titres sous 760px : taille déduite de la largeur utile et du mot le plus long
+  (« Musculation », « Réservation »), sinon le masque des lignes rogne le mot.
+- Soulignés animés en pseudo-élément (`::after`), jamais en `background` dégradé : un
+  fond de la couleur du texte fausse la mesure de contraste.
+- Photos en parallaxe (`.phead`, `.cta`) : c'est leur cadre (`inset: 0`,
+  `overflow: hidden`) qui rogne l'image débordante, pas un `clip-path` sur la section
+  (ligne d'anticrénelage au bas d'une hauteur fractionnaire, différente sous WordPress).
+- Grilles `auto-fit` en `minmax(min(Npx, 100%), 1fr)` : rien ne déborde à 320px.
+
