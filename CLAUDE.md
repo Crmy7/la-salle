@@ -139,6 +139,13 @@ Tout écouteur `window` ou callback `gsap.ticker` posé dans `useAnimations.ts` 
 être enregistré via `onDispose()`, sinon il survit au changement de page.
 `killAll()` tue les ScrollTriggers **avant** de vider les disposers.
 
+## Bandeau de consentement (WordPress seulement)
+Complianz est mis à la charte par `assets/css/complianz.css` dans le thème :
+redéfinition des variables `--cmplz_*`, feuille chargée après celle du plugin,
+et bandeau sous le rideau (z-index 95, masqué tant que `html.is-loading`).
+Le site ne déposant aucun cookie, le bandeau n'a de raison d'être que le jour
+où un traceur est ajouté.
+
 ## Mise en ligne du WordPress
 Le thème et les contenus voyagent séparément : archive du thème par
 *Apparence › Thèmes › Téléverser*, puis *Outils › Mise à jour La Salle* pour
