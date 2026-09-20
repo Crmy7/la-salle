@@ -139,6 +139,13 @@ Tout écouteur `window` ou callback `gsap.ticker` posé dans `useAnimations.ts` 
 être enregistré via `onDispose()`, sinon il survit au changement de page.
 `killAll()` tue les ScrollTriggers **avant** de vider les disposers.
 
+## Mise en ligne du WordPress
+Le thème et les contenus voyagent séparément : archive du thème par
+*Apparence › Thèmes › Téléverser*, puis *Outils › Mise à jour La Salle* pour
+rejouer `setup/seed.php` et `setup/seo.php` depuis le navigateur (l'hébergement
+OVH du client n'a pas de SSH). Le seed ne force `blog_public` qu'à la toute
+première installation : il ne referme pas l'indexation d'un site en ligne.
+
 ## Dev
 `npm run dev` (port 3000) · `npm run build` · `npm run generate` (statique)
 Audit visuel : scripts Playwright dans le scratchpad (playwright global + chromium installés)
