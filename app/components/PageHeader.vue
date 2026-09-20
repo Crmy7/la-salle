@@ -1,5 +1,5 @@
 <template>
-  <header class="phead">
+  <header class="phead" :class="{ 'phead--compact': compact }">
     <div class="phead__media">
       <img :src="image" :alt="imageAlt" data-parallax-img >
     </div>
@@ -17,5 +17,7 @@ defineProps<{
   intro?: string
   image: string
   imageAlt: string
+  /** Titre long : échelle réduite, sinon le mot le plus long déborde */
+  compact?: boolean
 }>()
 </script>

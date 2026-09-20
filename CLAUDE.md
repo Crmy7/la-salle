@@ -53,9 +53,9 @@ Refonte du site de La Salle, salle de sport à La Roche-sur-Foron (lasalle-gym.c
 - `mentions-legales.vue` — mentions légales et politique de confidentialité, liées
   depuis le pied de page. Le texte est dans `MENTIONS` (useSiteData) : `{email}` et
   `{tel}` y deviennent des liens, une ligne vide sépare deux paragraphes. Trois
-  mentions obligatoires restent à renseigner avant la mise en ligne (forme juridique
-  et immatriculation, directeur de la publication, hébergeur) : elles sont écrites
-  en clair dans la page pour ne pas passer inaperçues.
+  seule mention obligatoire manquante est le directeur de la publication : elle est
+  écrite en clair dans la page pour ne pas passer inaperçue. Éditeur : SARL LA SALLE,
+  capital 32 776,55 €, SIREN 435 234 497. Hébergeur : OVH.
 
 ## Architecture des animations
 - Le preloader vit dans `app.vue` et ne joue qu'une fois : `setPreloaderGate()` expose

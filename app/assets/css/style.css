@@ -1073,6 +1073,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   line-height: 0.92;
   color: var(--os);
 }
+/* Titre long (« Mentions légales et politique de confidentialité ») :
+   « confidentialité » mesure 11,5 em, il déborderait à pleine échelle. */
+.phead--compact .phead__title { font-size: clamp(28px, 5.2vw, 76px); }
 .phead__intro {
   margin-top: clamp(22px, 2.4vw, 34px);
   max-width: 56ch;
@@ -2118,4 +2121,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   /* Un sommaire de douze entrées avant le texte alourdirait la page */
   .legal__nav { display: none; }
   .legal__grid { grid-template-columns: minmax(0, 66ch); }
+}
+
+@media (max-width: 760px) {
+  /* Même calcul que les autres titres, sur le mot le plus long de la page */
+  .phead--compact .phead__title { font-size: clamp(26px, calc((100vw - 2 * var(--pad)) / 10.6), 52px); }
 }

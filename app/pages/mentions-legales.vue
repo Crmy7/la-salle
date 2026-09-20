@@ -1,8 +1,9 @@
 <template>
   <main class="page">
     <PageHeader
-      title="Mentions légales"
-      intro="Mentions légales et politique de confidentialité de ce site. La Salle ne dépose aucun cookie et ne mesure pas l'audience de ce site."
+      title="Mentions légales et politique de confidentialité"
+      intro="La Salle ne dépose aucun cookie, ne mesure pas l'audience de ce site et ne confie vos données à personne."
+      compact
       image="/assets/img/bw/halteres-rack.jpg"
       image-alt="Le plateau de musculation de La Salle"
     />

@@ -403,12 +403,12 @@ export const MENTIONS: SectionLegale[] = [
   {
     titre: 'Éditeur du site',
     texte:
-      "Ce site est édité par La Salle, salle de sport située 480 avenue Jean Morin, Z.I des Dragiez, 74800 La Roche-sur-Foron.\n\nTéléphone : {tel}. E-mail : {email}.\n\nForme juridique, capital social, numéro SIRET, immatriculation au RCS, numéro de TVA intracommunautaire et directeur de la publication : à renseigner avant la mise en ligne.",
+      "Ce site est édité par LA SALLE, société à responsabilité limitée au capital de 32 776,55 €, dont le siège est situé 480 avenue Jean Morin, Z.I des Dragiez, 74800 La Roche-sur-Foron.\n\nSIREN 435 234 497, SIRET 435 234 497 00020, immatriculée au registre du commerce et des sociétés sous le numéro 435 234 497. Activité : gestion d'installations sportives (code NAF 93.11Z).\n\nTéléphone : {tel}. E-mail : {email}. Directeur de la publication : à renseigner avant la mise en ligne.",
   },
   {
     titre: 'Hébergement',
     texte:
-      "Le site est hébergé par un prestataire dont la raison sociale, l'adresse et le téléphone sont à renseigner avant la mise en ligne.",
+      "Le site est hébergé par OVH SAS, 2 rue Kellermann, 59100 Roubaix, France. Téléphone : 1007 depuis la France, +33 9 72 10 10 07 depuis l'étranger.",
   },
   {
     titre: 'Conception et développement',
