@@ -2038,3 +2038,84 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .acces .section-title,
   .pacces .section-title { font-size: clamp(28px, calc((100vw - 2 * var(--pad)) / 8.8), 36px); }
 }
+
+/* ============================================================
+   MENTIONS LÉGALES
+   ============================================================ */
+.legal { padding: clamp(60px, 7vw, 100px) 0 clamp(80px, 9vw, 140px); }
+/* Sommaire à gauche, texte à droite : la colonne de lecture reste courte
+   sans laisser la moitié de la page vide. */
+.legal__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 260px) minmax(0, 66ch);
+  gap: clamp(32px, 6vw, 110px);
+  align-items: start;
+}
+.legal__nav {
+  position: sticky;
+  top: 110px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.legal__nav-title {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--noir-doux);
+}
+.legal__nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.legal__nav a {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--noir-70);
+  width: fit-content;
+  transition: color 0.3s ease;
+}
+.legal__nav a:hover { color: var(--noir); }
+.legal__inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(34px, 4vw, 54px);
+}
+/* La cible d'une ancre ne se colle pas sous l'en-tête fixe */
+.legal__block { scroll-margin-top: 110px; }
+.legal__title {
+  margin-bottom: 14px;
+  font-size: clamp(19px, 1.7vw, 24px);
+  font-weight: 700;
+  font-variation-settings: "wdth" 106;
+  letter-spacing: -0.01em;
+  color: var(--noir);
+}
+.legal__block p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--noir-70);
+}
+.legal__block p + p { margin-top: 14px; }
+.legal__block a { color: var(--noir); }
+.legal__list {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.legal__list li {
+  padding-top: 12px;
+  border-top: 1px solid var(--noir-12);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--noir-70);
+}
+
+@media (max-width: 900px) {
+  /* Un sommaire de douze entrées avant le texte alourdirait la page */
+  .legal__nav { display: none; }
+  .legal__grid { grid-template-columns: minmax(0, 66ch); }
+}

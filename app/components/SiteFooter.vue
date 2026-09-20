@@ -28,7 +28,7 @@
       </div>
       <div class="footer__legal">
         <span>© 2026 La Salle · Stronger Everyday</span>
-        <span><a href="#" data-hover-line>Mentions légales</a> · <a href="#" data-hover-line>Politique de confidentialité</a></span>
+        <span><NuxtLink to="/mentions-legales" data-hover-line>Mentions légales et politique de confidentialité</NuxtLink></span>
       </div>
       <div class="footer__wordmark" aria-hidden="true">
         <span data-footer-wordmark>LA SALLE</span>

@@ -386,6 +386,93 @@ export const AUTRES_ABOS = [
 ]
 
 /* ============================================================
+   MENTIONS LÉGALES ET CONFIDENTIALITÉ
+   Un seul texte pour les deux sites. `{email}` et `{tel}` deviennent des
+   liens à l'affichage. Les mentions obligatoires manquantes (forme
+   juridique, SIRET, hébergeur) sont signalées en clair : elles doivent
+   être renseignées avant la mise en ligne.
+   ============================================================ */
+
+export interface SectionLegale {
+  titre: string
+  texte: string
+  liste?: string[]
+}
+
+export const MENTIONS: SectionLegale[] = [
+  {
+    titre: 'Éditeur du site',
+    texte:
+      "Ce site est édité par La Salle, salle de sport située 480 avenue Jean Morin, Z.I des Dragiez, 74800 La Roche-sur-Foron.\n\nTéléphone : {tel}. E-mail : {email}.\n\nForme juridique, capital social, numéro SIRET, immatriculation au RCS, numéro de TVA intracommunautaire et directeur de la publication : à renseigner avant la mise en ligne.",
+  },
+  {
+    titre: 'Hébergement',
+    texte:
+      "Le site est hébergé par un prestataire dont la raison sociale, l'adresse et le téléphone sont à renseigner avant la mise en ligne.",
+  },
+  {
+    titre: 'Conception et développement',
+    texte:
+      "Le design, le développement et les animations de ce site ont été réalisés par l'Agence BB®, représentée par BB Switzerland Sàrl, à Genève. Les contenus, les photographies de la salle et la marque appartiennent à La Salle.",
+  },
+  {
+    titre: 'Propriété intellectuelle',
+    texte:
+      "Les textes, le logo, la charte graphique et la structure de ce site sont protégés. Leur reproduction, même partielle, est interdite sans accord écrit de La Salle et de l'Agence BB®.\n\nLes photographies sont la propriété de La Salle ou utilisées sous licence. Elles ne peuvent être réutilisées sans autorisation.",
+  },
+  {
+    titre: 'Responsable du traitement des données',
+    texte:
+      "La Salle est responsable des données personnelles traitées depuis ce site, au sens du règlement général sur la protection des données (RGPD) et de la loi Informatique et Libertés. Pour toute question sur vos données, écrivez à {email} ou appelez le {tel}.",
+  },
+  {
+    titre: 'Ce que ce site ne fait pas',
+    texte:
+      "Ce site présente la salle : il n'y a ni compte adhérent, ni paiement en ligne, ni espace personnel. Aucune donnée n'est collectée pendant votre visite.",
+    liste: [
+      "Aucune mesure d'audience, aucun outil statistique, aucun pixel publicitaire.",
+      'Aucun profilage, aucune publicité ciblée, aucune revente de données.',
+      "Aucune inscription à une lettre d'information.",
+    ],
+  },
+  {
+    titre: 'Formulaire de contact',
+    texte:
+      "Le formulaire de la page Contact n'envoie rien au serveur : il ouvre votre messagerie avec un message pré-rempli, que vous envoyez vous-même. Les champs remplis (nom, prénom, adresse e-mail, objet et message) partent donc de votre messagerie vers celle de la salle.\n\nCes données servent uniquement à répondre à votre demande. Elles restent dans la boîte e-mail de la salle, sont conservées le temps du traitement puis trois ans au plus après le dernier échange, et ne sont transmises à personne d'autre. Ce traitement repose sur l'intérêt légitime de la salle à répondre aux personnes qui la contactent et sur les démarches préalables à une inscription.",
+  },
+  {
+    titre: 'Cookies',
+    texte:
+      "Ce site ne dépose aucun cookie, ni le sien ni celui d'un tiers : il n'y a donc pas de bandeau de consentement.\n\nUne seule information technique est enregistrée dans votre navigateur, le temps de l'onglet : un indicateur qui évite de rejouer l'animation d'ouverture à chaque page. Il ne contient aucune donnée personnelle et disparaît à la fermeture.",
+  },
+  {
+    titre: 'Polices de caractères',
+    texte:
+      "La typographie du site est chargée depuis les serveurs de Google Fonts. Cet appel transmet votre adresse IP à Google, qui peut la traiter hors de l'Union européenne. Aucune autre donnée n'est communiquée et ce chargement ne dépose pas de cookie.",
+  },
+  {
+    titre: "Liens vers d'autres services",
+    texte:
+      "Le site renvoie vers le compte Instagram de la salle, vers Google Maps pour l'itinéraire et vers l'application de réservation des adhérents. Dès que vous suivez l'un de ces liens, vous quittez ce site : ce sont les conditions et les politiques de confidentialité de ces services qui s'appliquent.",
+  },
+  {
+    titre: 'Vos droits',
+    texte:
+      "Vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité sur vos données.",
+    liste: [
+      'Pour les exercer : écrire à {email}, ou à La Salle, 480 avenue Jean Morin, Z.I des Dragiez, 74800 La Roche-sur-Foron.',
+      "La salle répond dans un délai d'un mois.",
+      'En cas de désaccord, vous pouvez saisir la CNIL, 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07, ou déposer une plainte sur cnil.fr.',
+    ],
+  },
+  {
+    titre: 'Mise à jour',
+    texte:
+      "Cette page évolue avec le site : tout nouvel outil ajouté y sera décrit. Dernière mise à jour : 20 septembre 2026.",
+  },
+]
+
+/* ============================================================
    PLANNING · relevé sur les grilles officielles
    ============================================================ */
 
